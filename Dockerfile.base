@@ -1,0 +1,18 @@
+###################
+# BUILD FOR LOCAL DEVELOPMENT
+###################
+
+FROM node:18-alpine AS backend
+
+WORKDIR /app
+RUN yarn global add turbo
+COPY . .
+RUN yarn install
+RUN yarn turbo run build --filter=backend
+
+
+
+FROM node:18-alpine AS frontend
+WORKDIR /app
+COPY --from=backend /app /app
+RUN yarn turbo run build --filter=frontend
