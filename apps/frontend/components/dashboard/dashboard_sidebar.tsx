@@ -1,4 +1,4 @@
-import { navLinks } from "@/app/store/sidebar.store";
+import { navLinks } from "@/app/utils/navLinks";
 import Link from "next/link";
 import { FiCloudRain } from "react-icons/fi";
 
