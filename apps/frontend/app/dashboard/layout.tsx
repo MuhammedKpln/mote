@@ -1,4 +1,5 @@
-import { DashboardSidebar } from "@/components/dashboard_sidebar";
+import { DashboardHeader } from "@/components/dashboard/dashboard_header";
+import { DashboardSidebar } from "@/components/dashboard/dashboard_sidebar";
 import { Suspense } from "react";
 import styles from "./dashboard.module.scss";
 
@@ -10,12 +11,14 @@ export default function DashboardLayout({
   return (
     <div id="container" className={styles.container}>
       <div id="sidebar" className={styles.sidebar}>
-        <Suspense fallback={<h1>Loading...</h1>}>
-          <DashboardSidebar />
-        </Suspense>
+        <DashboardSidebar />
       </div>
       <div id="content" className={styles.content}>
-        {children}
+        <Suspense fallback="Loading..">
+          <DashboardHeader />
+        </Suspense>
+
+        <Suspense fallback="Loading..">{children}</Suspense>
       </div>
     </div>
   );

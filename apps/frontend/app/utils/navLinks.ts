@@ -1,4 +1,4 @@
-import { IconType } from "react-icons";
+import { IMenuRoot } from "@/models/nav_link.model";
 import {
   FiArchive,
   FiHome,
@@ -6,23 +6,8 @@ import {
   FiServer,
   FiUsers,
 } from "react-icons/fi";
-import { create } from "zustand";
 
-interface IMenuCategory {
-  label: string;
-  menus: IMenu[];
-}
-
-interface IMenu {
-  label: string;
-  icon: IconType;
-}
-
-interface IMenuStore {
-  menus: IMenuCategory[];
-}
-
-export const useSidebarStore = create<IMenuStore>()((set) => ({
+export const navLinks: IMenuRoot = {
   menus: [
     {
       label: "Activity",
@@ -30,24 +15,29 @@ export const useSidebarStore = create<IMenuStore>()((set) => ({
         {
           label: "Dashboard",
           icon: FiHome,
+          href: "/dashboard",
         },
         {
           label: "Orders",
           icon: FiArchive,
+          href: "/dashboard/orders",
         },
         {
           label: "Clients",
           icon: FiUsers,
+          href: "/dashboard",
         },
         {
           label: "Files",
           icon: FiServer,
+          href: "/dashboard",
         },
         {
           label: "Tickets",
           icon: FiPhoneIncoming,
+          href: "/dashboard",
         },
       ],
     },
   ],
-}));
+};
