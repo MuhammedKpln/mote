@@ -1,4 +1,25 @@
-export function Home() {
+"use client";
+
+import { useRouter } from "next/navigation";
+import React, { useCallback, useState } from "react";
+import { useAuthStore } from "../store/auth.store";
+
+export default function LoginPage() {
+  const [email, setEmail] = useState<string>("");
+  const login = useAuthStore((state) => state.login);
+  const router = useRouter();
+
+  const loginBtn = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      await login(email);
+
+      router.push("/dashboard");
+    },
+    [login, email, router]
+  );
+
   return (
     <>
       <style jsx global>
@@ -25,15 +46,18 @@ export function Home() {
             Enter your credentials to access your account
           </p>
 
-          <form action="#">
+          <form action="#" onSubmit={loginBtn}>
             <div className="input-form py-2">
               <input
                 type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
             <div className="input-form py-2">
               <input
+                placeholder="Password"
                 type="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
