@@ -21,10 +21,11 @@ export default function DashboardLayout({
   useEffect(() => {
     setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowSizeChange);
+
     return () => {
       window.removeEventListener("resize", handleWindowSizeChange);
     };
-  }, []);
+  }, [handleWindowSizeChange]);
 
   const closeSidebar = useCallback(() => {
     if (isOpen) {
@@ -47,7 +48,7 @@ export default function DashboardLayout({
               exit={{
                 x: "-100%",
               }}
-              transition={{ type: "tween", bounce: 0.2, duration: 0.1 }}
+              transition={{ type: "tween", duration: 0.1 }}
             >
               <DashboardSidebar />
             </motion.div>
@@ -67,7 +68,7 @@ export default function DashboardLayout({
             scale: isOpen ? 0.8 : 1,
             opacity: isOpen ? 0.5 : 1,
           }}
-          transition={{ type: "tween", bounce: 0, duration: 0.2 }}
+          transition={{ type: "tween", duration: 0.2 }}
         >
           <Suspense fallback="Loading..">
             <DashboardHeader />
