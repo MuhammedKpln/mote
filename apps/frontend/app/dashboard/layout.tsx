@@ -11,7 +11,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [width, setWidth] = useState<number>(1024);
   const isMobile = useMemo(() => width <= 768, [width]);
 
   const handleWindowSizeChange = useCallback(() => {
@@ -19,6 +19,7 @@ export default function DashboardLayout({
   }, []);
 
   useEffect(() => {
+    setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowSizeChange);
     return () => {
       window.removeEventListener("resize", handleWindowSizeChange);
