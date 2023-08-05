@@ -12,18 +12,15 @@ export function DashboardSidebar() {
       </div>
 
       <ul className="p-3">
-        {navLinks.menus.map((menu) => (
-          <>
-            <li
-              className="text-gray-400 text-sm font-medium p-2"
-              key={menu.label}
-            >
+        {navLinks.menus.map((menu, index) => (
+          <div key={index}>
+            <li className="text-gray-400 text-sm font-medium p-2">
               {menu.label}
             </li>
             <li>
               <ul className="my-2">
-                {menu.menus.map((e) => (
-                  <li key={e.label}>
+                {menu.menus.map((e, index) => (
+                  <li key={index}>
                     <Link
                       href={e.href}
                       className="flex w-full align-center leading-none p-2 rounded-lg hover:bg-gray-200"
@@ -38,7 +35,7 @@ export function DashboardSidebar() {
                 ))}
               </ul>
             </li>
-          </>
+          </div>
         ))}
       </ul>
     </aside>
