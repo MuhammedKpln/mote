@@ -1,7 +1,7 @@
 import { IBreadcrumb } from "@/models/breadcrumb.model";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 interface ICrumbProps {
   last: boolean;
@@ -37,10 +37,6 @@ export default function NextBreadcrumbs({
 
     return [...crumblist];
   }, [pathName, getDefaultTextGenerator]);
-
-  useEffect(() => {
-    console.log(breadcrumbs);
-  });
 
   return (
     <div aria-label="breadcrumb" className="flex">
