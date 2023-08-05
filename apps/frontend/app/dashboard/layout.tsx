@@ -1,31 +1,90 @@
 "use client";
 import { DashboardHeader } from "@/components/dashboard/dashboard_header";
 import { DashboardSidebar } from "@/components/dashboard/dashboard_sidebar";
-import { Suspense, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./dashboard.module.scss";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const isMobile = useMemo(() => width <= 768, [width]);
+
+  const handleWindowSizeChange = useCallback(() => {
+    setWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowSizeChange);
+    return () => {
+      window.removeEventListener("resize", handleWindowSizeChange);
+    };
+  }, []);
+
+  const closeSidebar = useCallback(() => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  }, [isOpen]);
+
   return (
     <div id="container" className={styles.container}>
-      <div
-        id="sidebar"
-        className={collapsed ? styles.sidebarHidden : styles.sidebar}
-      >
-        <DashboardSidebar />
-      </div>
-      <div id="content" className={styles.content}>
-        <Suspense fallback="Loading..">
-          <DashboardHeader />
-        </Suspense>
-        <button onClick={() => setCollapsed(!collapsed)}>collapse</button>
+      <AnimatePresence>
+        {isMobile ? (
+          isOpen && (
+            <motion.div
+              id="sidebar"
+              className="bg-gray-200"
+              initial={{ x: "-100%" }}
+              animate={{
+                x: 0,
+              }}
+              exit={{
+                x: "-100%",
+              }}
+              transition={{ type: "tween", bounce: 0.2, duration: 0.1 }}
+            >
+              <DashboardSidebar />
+            </motion.div>
+          )
+        ) : (
+          <div id="sidebar" className={styles.sidebar}>
+            <DashboardSidebar />
+          </div>
+        )}
+      </AnimatePresence>
+      {isMobile ? (
+        <motion.div
+          id="content"
+          className={styles.content}
+          onClick={closeSidebar}
+          animate={{
+            scale: isOpen ? 0.8 : 1,
+            opacity: isOpen ? 0.5 : 1,
+          }}
+          transition={{ type: "tween", bounce: 0, duration: 0.2 }}
+        >
+          <Suspense fallback="Loading..">
+            <DashboardHeader />
+          </Suspense>
+          <button onClick={() => setIsOpen(!isOpen)}>collapse</button>
 
-        <Suspense fallback="Loading..">{children}</Suspense>
-      </div>
+          <Suspense fallback="Loading..">{children}</Suspense>
+        </motion.div>
+      ) : (
+        <div id="content" className={styles.content}>
+          <Suspense fallback="Loading..">
+            <DashboardHeader />
+          </Suspense>
+          <button onClick={() => setIsOpen(!isOpen)}>collapse</button>
+
+          <Suspense fallback="Loading..">{children}</Suspense>
+        </div>
+      )}
     </div>
   );
 }
