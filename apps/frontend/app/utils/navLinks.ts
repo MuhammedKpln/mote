@@ -23,9 +23,9 @@ export const navLinks: IMenuRoot = {
           href: "/dashboard/orders",
         },
         {
-          label: "Clients",
+          label: "Notes",
           icon: FiUsers,
-          href: "/dashboard",
+          href: "/dashboard/notes",
         },
         {
           label: "Files",

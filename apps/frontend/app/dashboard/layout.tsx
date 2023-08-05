@@ -72,8 +72,6 @@ export default function DashboardLayout({
           <Suspense fallback="Loading..">
             <DashboardHeader />
           </Suspense>
-          <button onClick={() => setIsOpen(!isOpen)}>collapse</button>
-
           <Suspense fallback="Loading..">{children}</Suspense>
         </motion.div>
       ) : (
@@ -81,8 +79,6 @@ export default function DashboardLayout({
           <Suspense fallback="Loading..">
             <DashboardHeader />
           </Suspense>
-          <button onClick={() => setIsOpen(!isOpen)}>collapse</button>
-
           <Suspense fallback="Loading..">{children}</Suspense>
         </div>
       )}
