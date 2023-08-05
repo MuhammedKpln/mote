@@ -44,7 +44,7 @@ export default function DashboardLayout({
           isOpen && (
             <motion.div
               id="sidebar"
-              className="bg-gray-200"
+              className={styles.sidebar}
               initial={{ x: "-100%" }}
               animate={{
                 x: 0,
