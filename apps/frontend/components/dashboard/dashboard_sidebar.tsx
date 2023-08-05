@@ -4,7 +4,7 @@ import { FiCloudRain } from "react-icons/fi";
 
 export function DashboardSidebar() {
   return (
-    <aside className="block h-full bg-gray-100 p-2 border-r shadow-lg">
+    <aside className="block h-full bg-gray-100 hover:bg-gray-100 p-2 border-r shadow-lg">
       <div id="logo" className="p-2 mx-5 border w-10 rounded-lg justify-center">
         <Link href="/dashboard">
           <FiCloudRain />
