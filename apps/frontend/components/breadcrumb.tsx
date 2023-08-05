@@ -53,18 +53,14 @@ export default function NextBreadcrumbs({
 
 function Crumb(props: ICrumbProps) {
   if (props.last) {
-    return (
-      <h1 className="align-center leading-none rounded-lg text-md font-semibold">
-        {props.text}
-      </h1>
-    );
+    return <h1 className="align-center text-md font-semibold">{props.text}</h1>;
   }
 
   return (
     <Link
       color="inherit"
       href={props.href}
-      className="mr-2 after:content-['_/'] align-center leading-none rounded-lg text-md font-semibold"
+      className="mr-2 after:content-['_/']  text-md text-gray-500"
     >
       {props.text}
     </Link>
