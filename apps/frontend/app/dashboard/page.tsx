@@ -16,7 +16,7 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
     <>
       {/* <h1> Dashboard </h1> */}
       <SingleEntry />
-      {/* <button onClick={logoutBtn}> Logout </button> */}
+      <button onClick={logoutBtn}> Logout </button>
     </>
   );
 }

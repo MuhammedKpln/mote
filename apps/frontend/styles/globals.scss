@@ -3,12 +3,23 @@
 @tailwind utilities;
 
 @layer components {
-  .btn.primary {
-    @apply bg-blue-700 text-white p-2 rounded-md text-sm;
+  .btn {
+    &.primary {
+      @apply bg-blue-700;
+    }
+
+    &.text {
+      @apply shadow-2xl border text-black;
+    }
+
+    &.secondary {
+      @apply bg-gray-300 text-black p-2 rounded-md text-sm;
+
+    }
+
+    @apply text-white p-2 rounded-md text-sm flex leading-none;
   }
-  .btn.secondary {
-    @apply bg-gray-300 text-black p-2 rounded-md text-sm;
-  }
+ 
 }
 
 body {

@@ -1,9 +1,9 @@
 "use client";
 import { DashboardHeader } from "@/components/dashboard/dashboard_header";
 import { DashboardSidebar } from "@/components/dashboard/dashboard_sidebar";
+import { AnimatePresence, motion } from "framer-motion";
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./dashboard.module.scss";
-import { AnimatePresence, motion } from "framer-motion";
 
 export default function DashboardLayout({
   children,
@@ -79,7 +79,9 @@ export default function DashboardLayout({
           <Suspense fallback="Loading..">
             <DashboardHeader />
           </Suspense>
-          <Suspense fallback="Loading..">{children}</Suspense>
+          <Suspense fallback="Loading..">
+            <div className="p-5">{children}</div>
+          </Suspense>
         </div>
       )}
     </div>
