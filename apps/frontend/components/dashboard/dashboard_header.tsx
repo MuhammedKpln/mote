@@ -2,17 +2,13 @@
 
 import { navLinks } from "@/app/utils/navLinks";
 import { IMenu } from "@/models/nav_link.model";
-import userPic from "@/public/user.jpg";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import { DropdownItem } from "../dropdown/dropdown_item";
-import { DropdownMenu } from "../dropdown/dropdown_menu";
+import { useMemo } from "react";
+import { DashboardHeaderSearch } from "./dashboard_header_search";
+import { DashboardHeaderUser } from "./dashboard_header_user";
 
 export function DashboardHeader() {
   const pathName = usePathname();
-  const [open, setOpen] = useState(false);
 
   const headerTitleInfo = useMemo<IMenu | undefined>(() => {
     for (const menu of navLinks.menus) {
@@ -39,27 +35,9 @@ export function DashboardHeader() {
       </div>
 
       <div id="user-actions" className="flex w-20 justify-around my-auto">
-        <FiSearch />
-        <div
-          id="user"
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          <Image
-            alt="user"
-            width={20}
-            height={20}
-            src={userPic}
-            className="rounded-full cursor-pointer"
-          />
-        </div>
+        <DashboardHeaderSearch />
 
-        <DropdownMenu isOpen={open} onExitHover={() => setOpen(false)}>
-          <DropdownItem>
-            <a> selam </a>
-          </DropdownItem>
-        </DropdownMenu>
+        <DashboardHeaderUser />
       </div>
     </header>
   );

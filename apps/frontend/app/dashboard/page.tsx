@@ -1,4 +1,5 @@
 "use client";
+import { SingleEntry } from "@/components/single_entry";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "../store/auth.store";
 
@@ -13,9 +14,9 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <h1> Dashboard </h1>
-
-      <button onClick={logoutBtn}> Logout </button>
+      {/* <h1> Dashboard </h1> */}
+      <SingleEntry />
+      {/* <button onClick={logoutBtn}> Logout </button> */}
     </>
   );
 }

@@ -63,10 +63,7 @@ export default function LoginPage() {
               />
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-blue-700 text-white p-2 rounded-md text-sm"
-            >
+            <button type="submit" className="btn primary w-full">
               Contiune
             </button>
 
