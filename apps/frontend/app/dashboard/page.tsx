@@ -3,7 +3,7 @@ import { SingleEntry } from "@/components/single_entry";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "../store/auth.store";
 
-export default function Dashboard({ children }: { children: React.ReactNode }) {
+export default function Dashboard() {
   const logout = useAuthStore((state) => state.logout);
   const router = useRouter();
 
