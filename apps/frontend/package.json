@@ -13,7 +13,7 @@
     "@nextui-org/modal": "^2.0.2",
     "@nextui-org/system": "^2.0.2",
     "@nextui-org/theme": "^2.0.2",
-    "@uiw/react-md-editor": "^3.23.5",
+    "@uiw/react-md-editor": "v3.6.0",
     "framer-motion": "^10.15.0",
     "js-cookie": "^3.0.5",
     "next": "^13.4.12",
