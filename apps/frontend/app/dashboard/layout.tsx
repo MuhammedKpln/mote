@@ -33,6 +33,10 @@ export default function DashboardLayout({
     }
   }, [isOpen]);
 
+  const toggleSidebar = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
   return (
     <div id="container" className={styles.container}>
       <AnimatePresence>
@@ -71,7 +75,7 @@ export default function DashboardLayout({
           transition={{ type: "tween", duration: 0.2 }}
         >
           <Suspense fallback="Loading..">
-            <DashboardHeader />
+            <DashboardHeader showMenuIcon onMenuClick={toggleSidebar} />
           </Suspense>
           <Suspense fallback="Loading..">{children}</Suspense>
         </motion.div>
