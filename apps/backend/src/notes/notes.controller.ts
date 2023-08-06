@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   Query,
@@ -32,6 +33,16 @@ export class NotesController {
     @Query() pageOptionsDto: PaginationParamsDto,
   ) {
     return this.notesService.fetchAllNotesById(request.user.id, pageOptionsDto);
+  }
+  
+  @Get('/:id')
+  getSingleEntity(
+    @Param("id", {
+      transform: Number
+    }) id: number,
+    @Req() request: RequestWithUser
+  ) {
+    return this.notesService.getSingleById(id, request.user.id);
   }
 
   @Post('/')

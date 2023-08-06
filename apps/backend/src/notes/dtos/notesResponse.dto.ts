@@ -2,7 +2,7 @@ import { Note } from '@prisma/client';
 import { Exclude, Type } from 'class-transformer';
 import { UserResponseDto } from 'src/users/dto/userResponse.dto';
 
-class NotesResponse implements Note {
+export class NoteResponseDto implements Note {
   id: number;
   title: string;
   content: string;
@@ -18,8 +18,8 @@ class NotesResponse implements Note {
 }
 
 export class NotesResponseDto {
-  @Type(() => NotesResponse)
-  data: NotesResponse[];
+  @Type(() => NoteResponseDto)
+  data: NoteResponseDto[];
 
   count?: number;
 }
