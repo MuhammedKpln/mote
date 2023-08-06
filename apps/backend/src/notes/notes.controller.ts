@@ -4,6 +4,7 @@ import {
   Get,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
   UseInterceptors,
@@ -23,8 +24,12 @@ export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Get('/')
-  getAllNotes(@Req() request: RequestWithUser) {
-    return this.notesService.fetchAllNotesById(request.user.id);
+  getAllNotes(
+    @Req() request: RequestWithUser,
+    @Query('search') searchQuery?: string,
+  ) {
+    console.log(searchQuery);
+    return this.notesService.fetchAllNotesById(request.user.id, searchQuery);
   }
 
   @Post('/')

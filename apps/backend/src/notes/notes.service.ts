@@ -8,9 +8,36 @@ import { UpdateNoteDto } from './dtos/updateNote.dto';
 export class NotesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  fetchAllNotesById(userId: number): Promise<Note[]> {
+  fetchAllNotesById(userId: number, searchQuery?: string): Promise<Note[]> {
+    if (searchQuery) {
+      return this.searchForNotes(searchQuery, userId);
+    }
+
     return this.prisma.note.findMany({
       where: {
+        userId,
+      },
+      include: {
+        user: true,
+      },
+    });
+  }
+
+  private searchForNotes(searchQuery: string, userId: number): Promise<Note[]> {
+    return this.prisma.note.findMany({
+      where: {
+        OR: [
+          {
+            content: {
+              contains: searchQuery,
+            },
+          },
+          {
+            title: {
+              contains: searchQuery,
+            },
+          },
+        ],
         userId,
       },
       include: {
