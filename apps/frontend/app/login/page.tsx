@@ -1,23 +1,52 @@
 "use client";
 
+import { ILoginArgs, ILoginResponse } from "@/models/auth.model";
+import { authService } from "@/services/auth.service";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Input } from "@nextui-org/input";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
-import { useAuthStore } from "../store/auth.store";
+import { useCallback, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import * as Yup from "yup";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState<string>("");
-  const login = useAuthStore((state) => state.login);
+  const validationSchema = useMemo(() => {
+    return Yup.object().shape({
+      email: Yup.string().email().required().min(5),
+      password: Yup.string().required().min(5),
+    });
+  }, []);
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
-  const loginBtn = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
+  const mutation = useMutation<ILoginResponse, unknown, ILoginArgs>({
+    mutationFn: (variables) => authService.login(variables),
+  });
 
-      await login(email);
+  const onSubmit = useCallback(
+    async ({ email, password }: ILoginArgs) => {
+      const promise = mutation.mutateAsync({
+        email,
+        password,
+      });
+
+      toast.promise(promise, {
+        loading: "Logging in..",
+        error: "Could not login",
+        success: "Logged in!",
+      });
 
       router.push("/dashboard");
     },
-    [login, email, router]
+    [router]
   );
 
   return (
@@ -46,20 +75,23 @@ export default function LoginPage() {
             Enter your credentials to access your account
           </p>
 
-          <form action="#" onSubmit={loginBtn}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-form py-2">
-              <input
+              <Input
+                label="Email"
                 type="email"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+                validationState={errors.email?.message ? "invalid" : "valid"}
+                {...register("email")}
               />
             </div>
             <div className="input-form py-2">
-              <input
-                placeholder="Password"
+              <Input
+                label="Password"
                 type="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+                validationState={errors.password?.message ? "invalid" : "valid"}
+                {...register("password")}
               />
             </div>
 
