@@ -3,7 +3,6 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
-  HttpCode,
   Post,
   Req,
   UseGuards,
@@ -15,6 +14,7 @@ import { LoginDto } from 'src/users/dto/login.dto';
 import { UserResponseDto } from 'src/users/dto/userResponse.dto';
 import { JwtAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { LoginResponseDto } from './dtos/loginResponse.dto';
 import { TransformDataInterceptor } from './interceptors/removePassword.interceptor';
 import RequestWithUser from './types/requestWithUser.interface';
 
@@ -31,9 +31,8 @@ export class AuthController {
     return plainToInstance(UserResponseDto, data);
   }
 
-  @HttpCode(200)
   @Post('log-in')
-  async logIn(@Body() data: LoginDto) {
+  async logIn(@Body() data: LoginDto): Promise<LoginResponseDto | undefined> {
     const user = await this.authenticationService.getAuthenticatedUser(
       data.email,
       data.password,
@@ -44,10 +43,9 @@ export class AuthController {
 
       return {
         access_token: jwt,
+        user,
       };
     }
-
-    return {};
   }
 
   @UseGuards(JwtAuthGuard)
