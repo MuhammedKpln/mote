@@ -14,6 +14,7 @@ import { TransformDataInterceptor } from 'src/auth/interceptors/removePassword.i
 import RequestWithUser from 'src/auth/types/requestWithUser.interface';
 import { CreateNoteDto } from './dtos/createNote.dto';
 import { NotesResponseDto } from './dtos/notesResponse.dto';
+import { PaginationParamsDto } from './dtos/pagination.dto';
 import { UpdateNoteDto } from './dtos/updateNote.dto';
 import { NotesService } from './notes.service';
 
@@ -26,10 +27,9 @@ export class NotesController {
   @Get('/')
   getAllNotes(
     @Req() request: RequestWithUser,
-    @Query('search') searchQuery?: string,
+    @Query() pageOptionsDto: PaginationParamsDto,
   ) {
-    console.log(searchQuery);
-    return this.notesService.fetchAllNotesById(request.user.id, searchQuery);
+    return this.notesService.fetchAllNotesById(request.user.id, pageOptionsDto);
   }
 
   @Post('/')

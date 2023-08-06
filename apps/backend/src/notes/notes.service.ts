@@ -2,29 +2,50 @@ import { Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNoteDto } from './dtos/createNote.dto';
+import { NotesResponseDto } from './dtos/notesResponse.dto';
+import { PaginationParamsDto } from './dtos/pagination.dto';
 import { UpdateNoteDto } from './dtos/updateNote.dto';
 
 @Injectable()
 export class NotesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  fetchAllNotesById(userId: number, searchQuery?: string): Promise<Note[]> {
-    if (searchQuery) {
-      return this.searchForNotes(searchQuery, userId);
+  async fetchAllNotesById(
+    userId: number,
+    pageOptionsDto: PaginationParamsDto,
+  ): Promise<NotesResponseDto> {
+    if (pageOptionsDto.search) {
+      return this.searchForNotes(pageOptionsDto.search, userId);
     }
 
-    return this.prisma.note.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        user: true,
-      },
-    });
+    const [count, items] = await this.prisma.$transaction([
+      this.prisma.note.count(),
+      this.prisma.note.findMany({
+        where: {
+          userId,
+        },
+        skip: pageOptionsDto.offset,
+        take: pageOptionsDto.limit,
+        cursor: {
+          id: pageOptionsDto.startingId ?? 1,
+        },
+        include: {
+          user: true,
+        },
+      }),
+    ]);
+
+    return {
+      count,
+      data: items,
+    };
   }
 
-  private searchForNotes(searchQuery: string, userId: number): Promise<Note[]> {
-    return this.prisma.note.findMany({
+  private async searchForNotes(
+    searchQuery: string,
+    userId: number,
+  ): Promise<NotesResponseDto> {
+    const data = await this.prisma.note.findMany({
       where: {
         OR: [
           {
@@ -44,6 +65,10 @@ export class NotesService {
         user: true,
       },
     });
+
+    return {
+      data,
+    };
   }
 
   async createNote(note: CreateNoteDto, userId: number): Promise<Note> {
