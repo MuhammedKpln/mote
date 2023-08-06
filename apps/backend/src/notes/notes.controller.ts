@@ -11,12 +11,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { NotesResponseDto } from 'shared-types';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TransformDataInterceptor } from 'src/auth/interceptors/removePassword.interceptor';
 import RequestWithUser from 'src/auth/types/requestWithUser.interface';
 import { CreateNoteDto } from './dtos/createNote.dto';
 import { DeleteNote } from './dtos/deleteNote.dto';
-import { NotesResponseDto } from './dtos/notesResponse.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 import { UpdateNoteDto } from './dtos/updateNote.dto';
 import { NotesService } from './notes.service';
@@ -34,13 +34,14 @@ export class NotesController {
   ) {
     return this.notesService.fetchAllNotesById(request.user.id, pageOptionsDto);
   }
-  
+
   @Get('/:id')
   getSingleEntity(
-    @Param("id", {
-      transform: Number
-    }) id: number,
-    @Req() request: RequestWithUser
+    @Param('id', {
+      transform: Number,
+    })
+    id: number,
+    @Req() request: RequestWithUser,
   ) {
     return this.notesService.getSingleById(id, request.user.id);
   }

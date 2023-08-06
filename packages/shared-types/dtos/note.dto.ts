@@ -1,6 +1,6 @@
-import { Note } from '@prisma/client';
-import { Exclude, Type } from 'class-transformer';
-import { UserResponseDto } from 'src/users/dto/userResponse.dto';
+import { Note } from "@prisma/client";
+import { Exclude, Type } from "class-transformer";
+import { UserResponseDto } from "./auth.dto";
 
 export class NoteResponseDto implements Note {
   id: number;

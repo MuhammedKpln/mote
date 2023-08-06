@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
+import { NoteResponseDto, NotesResponseDto } from 'shared-types';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNoteDto } from './dtos/createNote.dto';
 import { DeleteNote } from './dtos/deleteNote.dto';
-import { NoteResponseDto, NotesResponseDto } from './dtos/notesResponse.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 import { UpdateNoteDto } from './dtos/updateNote.dto';
 
@@ -111,20 +111,19 @@ export class NotesService {
 
   async getSingleById(id: number, userId: number): Promise<NoteResponseDto> {
     const note = await this.prisma.note.findUnique({
-    where: {
-      id,
-      userId
-    },
-    include: {
-      user: true
-    }
+      where: {
+        id,
+        userId,
+      },
+      include: {
+        user: true,
+      },
     });
-  
 
-  if (!note) {
-    throw new HttpException("Note not found", HttpStatus.NOT_FOUND)
+    if (!note) {
+      throw new HttpException('Note not found', HttpStatus.NOT_FOUND);
+    }
+
+    return note;
   }
-
-  return note
-}
 }

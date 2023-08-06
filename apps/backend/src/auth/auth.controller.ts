@@ -9,12 +9,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { LoginDto, LoginResponseDto } from 'shared-types';
 import CreateUserDto from 'src/users/dto/createUser.dto';
-import { LoginDto } from 'src/users/dto/login.dto';
 import { UserResponseDto } from 'src/users/dto/userResponse.dto';
 import { JwtAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { LoginResponseDto } from './dtos/loginResponse.dto';
 import { TransformDataInterceptor } from './interceptors/removePassword.interceptor';
 import RequestWithUser from './types/requestWithUser.interface';
 
