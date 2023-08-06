@@ -8,6 +8,7 @@ WORKDIR /app
 RUN yarn global add turbo
 COPY . .
 RUN yarn install
+RUN yarn workspace backend prisma generate
 RUN yarn turbo run build --filter=backend
 
 FROM node:18-alpine AS frontend
