@@ -5,6 +5,7 @@
 FROM node:18-alpine AS backend
 
 WORKDIR /app
+RUN apk add python3 alpine-sdk
 RUN yarn global add turbo
 COPY . .
 RUN yarn install
