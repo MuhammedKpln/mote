@@ -1,5 +1,5 @@
 import { Note } from '@prisma/client';
-import { Type } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { UserResponseDto } from 'src/users/dto/userResponse.dto';
 
 class NotesResponse implements Note {
@@ -9,6 +9,9 @@ class NotesResponse implements Note {
   userId: number;
   created_at: Date;
   updated_at: Date;
+
+  @Exclude()
+  deleted_at: Date | null;
 
   @Type(() => UserResponseDto)
   user: UserResponseDto;

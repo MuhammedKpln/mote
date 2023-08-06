@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Post,
@@ -13,6 +14,7 @@ import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TransformDataInterceptor } from 'src/auth/interceptors/removePassword.interceptor';
 import RequestWithUser from 'src/auth/types/requestWithUser.interface';
 import { CreateNoteDto } from './dtos/createNote.dto';
+import { DeleteNote } from './dtos/deleteNote.dto';
 import { NotesResponseDto } from './dtos/notesResponse.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 import { UpdateNoteDto } from './dtos/updateNote.dto';
@@ -40,5 +42,10 @@ export class NotesController {
   @Patch('/')
   updateNote(@Body() body: UpdateNoteDto, @Req() request: RequestWithUser) {
     return this.notesService.updateNote(body, request.user.id);
+  }
+
+  @Delete('/')
+  deleteNote(@Body() body: DeleteNote, @Req() request: RequestWithUser) {
+    return this.notesService.deleteNote(body, request.user.id);
   }
 }

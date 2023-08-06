@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNoteDto } from './dtos/createNote.dto';
+import { DeleteNote } from './dtos/deleteNote.dto';
 import { NotesResponseDto } from './dtos/notesResponse.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 import { UpdateNoteDto } from './dtos/updateNote.dto';
@@ -88,6 +89,17 @@ export class NotesService {
   async updateNote(note: UpdateNoteDto, userId: number): Promise<Note> {
     const createdNote = await this.prisma.note.update({
       data: note,
+      where: {
+        id: note.id,
+        userId,
+      },
+    });
+
+    return createdNote;
+  }
+
+  async deleteNote(note: DeleteNote, userId: number): Promise<Note> {
+    const createdNote = await this.prisma.note.delete({
       where: {
         id: note.id,
         userId,
