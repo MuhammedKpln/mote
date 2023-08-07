@@ -1,6 +1,7 @@
 import { Note } from "@prisma/client";
 import { UserResponseDto } from "./auth";
 export declare class NoteResponseDto implements Note {
+    slug: string;
     id: number;
     title: string;
     content: string;

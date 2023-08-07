@@ -6,10 +6,10 @@ $animationSpeed: 300ms;
   right: 1%;
   min-width: 13rem;
 
-  @apply shadow-2xl rounded-xl border p-3 bg-white;
+  @apply shadow-2xl rounded-xl border p-3;
 
   & ul li {
-    @apply p-2 rounded-sm;
+    @apply p-2 rounded-s;
 
     &:hover {
       @apply bg-gray-100 cursor-pointer;
@@ -17,14 +17,13 @@ $animationSpeed: 300ms;
   }
 
   &.active {
-    opacity: 1;
     visibility: visible;
     transform: translateY(0);
     transition: $animationSpeed ease;
+    background-color: #fff;
   }
 
   &.inactive {
-    opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);
     transition: $animationSpeed ease;

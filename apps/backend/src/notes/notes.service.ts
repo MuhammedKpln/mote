@@ -1,11 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
-import { NoteResponseDto, NotesResponseDto } from 'mote-types';
+import { randomInt } from 'crypto';
+import { NoteResponseDto, NotesResponseDto, UpdateNoteDto } from 'mote-types';
+import slugify from 'slugify';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNoteDto } from './dtos/createNote.dto';
 import { DeleteNote } from './dtos/deleteNote.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
-import { UpdateNoteDto } from './dtos/updateNote.dto';
 
 @Injectable()
 export class NotesService {
@@ -27,9 +28,11 @@ export class NotesService {
         },
         skip: pageOptionsDto.offset,
         take: pageOptionsDto.limit,
-        cursor: {
-          id: pageOptionsDto.startingId ?? 1,
-        },
+        cursor: pageOptionsDto?.startingId
+          ? {
+              id: pageOptionsDto.startingId,
+            }
+          : undefined,
         include: {
           user: true,
         },
@@ -73,10 +76,15 @@ export class NotesService {
   }
 
   async createNote(note: CreateNoteDto, userId: number): Promise<Note> {
+    const _randomInt = randomInt(1000);
+    const modifiedTitle = `${note.title}-${_randomInt}`;
+    const slug = slugify(modifiedTitle);
+
     const createdNote = await this.prisma.note.create({
       data: {
         ...note,
         userId,
+        slug,
       },
       include: {
         user: true,
@@ -109,10 +117,13 @@ export class NotesService {
     return createdNote;
   }
 
-  async getSingleById(id: number, userId: number): Promise<NoteResponseDto> {
+  async getSingleBySlug(
+    slug: string,
+    userId: number,
+  ): Promise<NoteResponseDto> {
     const note = await this.prisma.note.findUnique({
       where: {
-        id,
+        slug,
         userId,
       },
       include: {

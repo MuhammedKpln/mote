@@ -10,11 +10,12 @@ interface IProps {
   isLoaded?: boolean;
   title: string;
   content: string;
+  href: string;
 }
 
-export function SingleEntry({ title, content, isLoaded }: IProps) {
+export function SingleEntry({ title, content, isLoaded, href }: IProps) {
   return (
-    <Link href="/dashboard/notes/selam">
+    <Link href={`/dashboard/notes/${href}`}>
       <div className="flex border rounded-md p-5 justify-between m-auto mb-5 hover:bg-gray-100">
         <div className="flex flex-col">
           <Skeleton isLoaded={isLoaded}>

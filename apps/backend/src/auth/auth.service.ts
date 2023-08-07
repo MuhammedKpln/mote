@@ -25,6 +25,7 @@ export class AuthService {
 
       return createdUser;
     } catch (error) {
+      console.error(error);
       throw new HttpException(
         'Something went wrong',
         HttpStatus.INTERNAL_SERVER_ERROR,

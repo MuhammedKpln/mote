@@ -10,7 +10,7 @@ export default function Dashboard() {
   const logout = useAuthStore((state) => state.logout);
   const authenticatedUser = useAuthStore((state) => state.authenticatedUser);
   const router = useRouter();
-  const { data, isLoading } = useQuery<NotesResponseDto>({
+  const { data } = useQuery<NotesResponseDto>({
     queryFn: () => noteService.fetchNotes(),
     queryKey: ["notes"],
   });
@@ -26,13 +26,11 @@ export default function Dashboard() {
         <SingleEntry
           content={note.content}
           title={note.title}
-          isLoaded={!isLoading}
+          href={note.slug}
+          isLoaded
           key={note.id}
         />
       ))}
-
-      <h1>Hello {authenticatedUser?.email}</h1>
-      <button onClick={logoutBtn}> Logout </button>
     </>
   );
 }
