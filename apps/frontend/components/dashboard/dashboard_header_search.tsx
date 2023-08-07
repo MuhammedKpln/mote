@@ -8,7 +8,6 @@ import {
   useDisclosure,
 } from "@nextui-org/modal";
 import { FiSearch } from "react-icons/fi";
-import { SingleEntry } from "../single_entry";
 
 export function DashboardHeaderSearch() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -43,6 +42,7 @@ export function DashboardHeaderSearch() {
                   <h1 className="font-semibold text-lg">Results: </h1>
 
                   <div>
+                    {/* <SingleEntry />
                     <SingleEntry />
                     <SingleEntry />
                     <SingleEntry />
@@ -55,8 +55,7 @@ export function DashboardHeaderSearch() {
                     <SingleEntry />
                     <SingleEntry />
                     <SingleEntry />
-                    <SingleEntry />
-                    <SingleEntry />
+                    <SingleEntry /> */}
                   </div>
                 </div>
               </ModalBody>

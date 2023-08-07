@@ -11,7 +11,7 @@ export default function Dashboard() {
   const authenticatedUser = useAuthStore((state) => state.authenticatedUser);
   const router = useRouter();
   const { data, isLoading } = useQuery<NotesResponseDto>({
-    queryFn: noteService.fetchNotes,
+    queryFn: () => noteService.fetchNotes(),
     queryKey: ["notes"],
   });
 
@@ -23,7 +23,12 @@ export default function Dashboard() {
   return (
     <>
       {data?.data.map((note) => (
-        <SingleEntry isLoaded={isLoading} key={note.id} />
+        <SingleEntry
+          content={note.content}
+          title={note.title}
+          isLoaded={!isLoading}
+          key={note.id}
+        />
       ))}
 
       <h1>Hello {authenticatedUser?.email}</h1>

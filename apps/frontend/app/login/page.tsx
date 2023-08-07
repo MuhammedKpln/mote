@@ -35,11 +35,14 @@ export default function LoginPage() {
     onSuccess: (data, variables) => onSuccesfullLogin(data),
   });
 
-  const onSuccesfullLogin = useCallback((data: LoginResponseDto) => {
-    saveAuth(data);
+  const onSuccesfullLogin = useCallback(
+    (data: LoginResponseDto) => {
+      saveAuth(data);
 
-    router.push("/dashboard");
-  }, []);
+      router.push("/dashboard");
+    },
+    [router, saveAuth]
+  );
 
   const onSubmit = useCallback(
     async ({ email, password }: LoginDto) => {
@@ -56,7 +59,7 @@ export default function LoginPage() {
 
       router.push("/dashboard");
     },
-    [router]
+    [router, mutation]
   );
 
   return (
