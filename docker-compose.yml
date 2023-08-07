@@ -9,6 +9,7 @@ services:
     command: yarn backend:dev:docker
     volumes:
       - ./apps/backend:/app/apps/backend
+      - ./packages:/app/packages
       - /app/apps/backend/node_modules
     env_file:
       - ./apps/backend/.env
@@ -27,6 +28,7 @@ services:
     command: yarn frontend:dev:docker
     volumes:
       - ./apps/frontend:/app/apps/frontend
+      - ./packages:/app/packages
       - /app/apps/frontend/node_modules
     ports:
       - 3000:3000
@@ -49,6 +51,7 @@ services:
 
 volumes:
   docker-nest-postgres:
+
 
 networks:
   api_network:

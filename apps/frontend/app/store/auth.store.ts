@@ -1,16 +1,14 @@
 import Cookies from "js-cookie";
+import { LoginResponseDto } from "shared-types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-interface ILoginInfo {
-  email: string;
-}
-
 interface IAuth {
   isAuthenticated: boolean;
-  login: (email: string) => Promise<void>;
+  authenticatedUser?: Pick<LoginResponseDto, "user">["user"];
+  accessToken?: string;
+  saveAuth: (loginResponse: LoginResponseDto) => void;
   logout: () => Promise<void>;
-  authenticatedUser?: ILoginInfo;
 }
 
 export const useAuthStore = create<IAuth>()(
@@ -19,19 +17,20 @@ export const useAuthStore = create<IAuth>()(
       isAuthenticated: false,
       logout: async () => {
         Cookies.remove("isAuthenticated");
-        set((state) => ({
+
+        set((_) => ({
           isAuthenticated: false,
           authenticatedUser: undefined,
+          accessToken: undefined,
         }));
       },
-      login: async (email: string) => {
+      saveAuth: (loginResponse: LoginResponseDto) => {
         Cookies.set("isAuthenticated", true.toString());
 
-        set((state) => ({
+        set(() => ({
           isAuthenticated: true,
-          authenticatedUser: {
-            email: email,
-          },
+          authenticatedUser: loginResponse.user,
+          accessToken: loginResponse.access_token,
         }));
       },
     }),

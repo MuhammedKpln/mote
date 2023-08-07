@@ -1539,6 +1539,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nextui-org/skeleton@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@nextui-org/skeleton@npm:2.0.4"
+  dependencies:
+    "@nextui-org/react-utils": 2.0.2
+    "@nextui-org/shared-utils": 2.0.2
+    "@nextui-org/system-rsc": 2.0.3
+    "@nextui-org/theme": 2.0.4
+  peerDependencies:
+    react: ">=18"
+  checksum: f12dad111f1c375840d4f2ae7316bc3b5b86f51d14f0fd67d602b1023c19e8bd28f56cf8deb64ac9e6411777fa4fe9e4f25d2c830c57567bba264cf0a0121e68
+  languageName: node
+  linkType: hard
+
+"@nextui-org/spinner@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@nextui-org/spinner@npm:2.0.4"
+  dependencies:
+    "@nextui-org/react-utils": 2.0.2
+    "@nextui-org/shared-utils": 2.0.2
+    "@nextui-org/system-rsc": 2.0.3
+    "@nextui-org/theme": 2.0.4
+  peerDependencies:
+    react: ">=18"
+  checksum: b83e166ff0a0f89a1290e3ef9eaf49988adb86ee24bb9f9d06c5b385aef3fc6d5e2fc7458467230514b53389874d329f13f0c63370e2a58c7f42678318b280df
+  languageName: node
+  linkType: hard
+
 "@nextui-org/system-rsc@npm:2.0.3":
   version: 2.0.3
   resolution: "@nextui-org/system-rsc@npm:2.0.3"
@@ -3643,6 +3671,7 @@ __metadata:
     prisma: ^5.1.1
     reflect-metadata: ^0.1.13
     rxjs: ^7.8.1
+    shared-types: "*"
     source-map-support: ^0.5.21
     supertest: ^6.3.3
     ts-jest: ^29.1.0
@@ -6028,6 +6057,8 @@ __metadata:
     "@hookform/resolvers": ^3.2.0
     "@nextui-org/input": ^2.0.4
     "@nextui-org/modal": ^2.0.2
+    "@nextui-org/skeleton": ^2.0.4
+    "@nextui-org/spinner": ^2.0.4
     "@nextui-org/system": ^2.0.2
     "@nextui-org/theme": ^2.0.2
     "@tanstack/react-query": ^4.32.6
@@ -6053,6 +6084,7 @@ __metadata:
     react-icons: ^4.10.1
     react-markdown: ^8.0.7
     sass: ^1.64.2
+    shared-types: "*"
     sharp: ^0.32.4
     tailwindcss: ^3.3.3
     typescript: 5.1.6
@@ -11381,6 +11413,17 @@ __metadata:
   checksum: be18cbbf70e7d8097c97f713a2e76edf84e87299b40d085c6bf8b65314e994cc15e2e317727342fa6996e38e1f52c59720b53fe621e2eb593a6847bf0356db89
   languageName: node
   linkType: hard
+
+"shared-types@*, shared-types@workspace:packages/shared-types":
+  version: 0.0.0-use.local
+  resolution: "shared-types@workspace:packages/shared-types"
+  dependencies:
+    class-transformer: ^0.5.1
+    class-validator: ^0.14.0
+    tsconfig: "*"
+    typescript: ^4.5.2
+  languageName: unknown
+  linkType: soft
 
 "sharp@npm:^0.32.4":
   version: 0.32.4

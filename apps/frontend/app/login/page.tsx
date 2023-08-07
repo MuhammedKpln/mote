@@ -1,6 +1,5 @@
 "use client";
 
-import { ILoginArgs, ILoginResponse } from "@/models/auth.model";
 import { authService } from "@/services/auth.service";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@nextui-org/input";
@@ -9,16 +8,20 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { LoginDto, LoginResponseDto } from "shared-types";
 import * as Yup from "yup";
+import { useAuthStore } from "../store/auth.store";
 
 export default function LoginPage() {
+  const saveAuth = useAuthStore((state) => state.saveAuth);
+  const router = useRouter();
+
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
       email: Yup.string().email().required().min(5),
       password: Yup.string().required().min(5),
     });
   }, []);
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,12 +30,19 @@ export default function LoginPage() {
     resolver: yupResolver(validationSchema),
   });
 
-  const mutation = useMutation<ILoginResponse, unknown, ILoginArgs>({
+  const mutation = useMutation<LoginResponseDto, unknown, LoginDto>({
     mutationFn: (variables) => authService.login(variables),
+    onSuccess: (data, variables) => onSuccesfullLogin(data),
   });
 
+  const onSuccesfullLogin = useCallback((data: LoginResponseDto) => {
+    saveAuth(data);
+
+    router.push("/dashboard");
+  }, []);
+
   const onSubmit = useCallback(
-    async ({ email, password }: ILoginArgs) => {
+    async ({ email, password }: LoginDto) => {
       const promise = mutation.mutateAsync({
         email,
         password,
