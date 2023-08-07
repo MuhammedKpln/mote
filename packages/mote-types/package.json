@@ -1,0 +1,18 @@
+{
+    "name": "mote-types",
+    "version": "0.0.0",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build":"tsc --build",
+        "dev":"tsc --watch"
+    },
+    "dependencies": {
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.0"
+    },
+    "devDependencies": {
+        "typescript": "^4.5.2",
+        "@prisma/client": "*"
+    }
+}

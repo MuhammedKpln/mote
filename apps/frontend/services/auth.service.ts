@@ -1,4 +1,4 @@
-import { LoginDto, LoginResponseDto } from "shared-types";
+import { LoginDto, LoginResponseDto } from "mote-types";
 import { ApiPaths } from "./api.service";
 import { BaseService } from "./base.service";
 

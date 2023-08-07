@@ -1,4 +1,4 @@
-import { NotesResponseDto } from "shared-types";
+import { NotesResponseDto } from "mote-types";
 import { ApiPaths } from "./api.service";
 import { BaseService } from "./base.service";
 

@@ -11,7 +11,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { NotesResponseDto } from 'shared-types';
+import { NotesResponseDto } from 'mote-types';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TransformDataInterceptor } from 'src/auth/interceptors/removePassword.interceptor';
 import RequestWithUser from 'src/auth/types/requestWithUser.interface';

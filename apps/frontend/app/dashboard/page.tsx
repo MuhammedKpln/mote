@@ -2,8 +2,8 @@
 import { SingleEntry } from "@/components/single_entry";
 import { noteService } from "@/services/note.service";
 import { useQuery } from "@tanstack/react-query";
+import { NotesResponseDto } from "mote-types";
 import { useRouter } from "next/navigation";
-import { NotesResponseDto } from "shared-types";
 import { useAuthStore } from "../store/auth.store";
 
 export default function Dashboard() {

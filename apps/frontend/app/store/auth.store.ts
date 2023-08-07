@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { LoginResponseDto } from "shared-types";
+import { LoginResponseDto } from "mote-types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 

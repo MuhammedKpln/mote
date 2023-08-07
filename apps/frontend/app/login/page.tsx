@@ -4,11 +4,11 @@ import { authService } from "@/services/auth.service";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@nextui-org/input";
 import { useMutation } from "@tanstack/react-query";
+import { LoginDto, LoginResponseDto } from "mote-types";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LoginDto, LoginResponseDto } from "shared-types";
 import * as Yup from "yup";
 import { useAuthStore } from "../store/auth.store";
 

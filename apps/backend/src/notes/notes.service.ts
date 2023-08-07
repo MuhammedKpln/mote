@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
-import { NoteResponseDto, NotesResponseDto } from 'shared-types';
+import { NoteResponseDto, NotesResponseDto } from 'mote-types';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNoteDto } from './dtos/createNote.dto';
 import { DeleteNote } from './dtos/deleteNote.dto';

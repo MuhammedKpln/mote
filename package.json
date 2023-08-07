@@ -16,9 +16,9 @@
     "turbo": "latest"
   },
   "name": "mote",
-  "packageManager": "yarn@3.6.1",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "packageManager": "yarn@1.22.19"
 }

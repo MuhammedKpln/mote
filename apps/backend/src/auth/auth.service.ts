@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { UserResponseDto } from 'shared-types';
+import { UserResponseDto } from 'mote-types';
 import CreateUserDto from 'src/users/dto/createUser.dto';
 import { UsersService } from 'src/users/users.service';
 import { TokenPayload } from './types/tokenPayload.interface';
