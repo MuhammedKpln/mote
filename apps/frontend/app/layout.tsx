@@ -1,6 +1,10 @@
 import "@/styles/globals.scss";
 import { Providers } from "./providers";
 
+export const metadata = {
+  title: "Mote",
+};
+
 export default function RootLayout({
   children,
 }: {

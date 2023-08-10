@@ -1,5 +1,5 @@
 import { IChipVariant } from "@/models/chip.model";
-import userPic from "@/public/user.jpg";
+import userPic from "@/public/user.png";
 import styles from "@/styles/single_entry.module.scss";
 import { Skeleton } from "@nextui-org/skeleton";
 import Image from "next/image";
