@@ -16,9 +16,7 @@ export function DashboardRootLayout({
         <Suspense fallback="Loading..">
           <DashboardHeader />
         </Suspense>
-        <Suspense fallback="Loading..">
-          <div className="p-5">{children}</div>
-        </Suspense>
+        <Suspense fallback="Loading..">{children}</Suspense>
       </div>
     </div>
   );

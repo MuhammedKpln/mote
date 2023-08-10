@@ -19,3 +19,17 @@
 
   @apply flex items-center flex-col min-h-screen;
 }
+
+
+.notesContainer {
+  @apply flex;
+  gap: 1
+}
+
+.notesSidebar {
+  flex-grow: 0.3;
+}
+
+.notesContent {
+  flex-grow: 1;
+}
