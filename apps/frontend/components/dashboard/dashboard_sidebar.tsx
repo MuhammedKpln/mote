@@ -1,33 +1,31 @@
 import { navLinks } from "@/app/utils/navLinks";
+import styles from "@/styles/dashboard.module.scss";
 import Link from "next/link";
 import { FiCloudRain } from "react-icons/fi";
 
 export function DashboardSidebar() {
   return (
-    <aside className="block h-full bg-gray-100p-2 border-r shadow-lg z-10">
+    <aside className={styles.sidebar}>
       <div id="logo" className="p-2 mx-5 border w-10 rounded-lg justify-center">
         <Link href="/dashboard">
           <FiCloudRain />
         </Link>
       </div>
 
-      <ul className="p-3">
+      <ul>
         {navLinks.menus.map((menu, index) => (
           <div key={index}>
-            <li className="text-gray-400 text-sm font-medium p-2">
-              {menu.label}
-            </li>
             <li>
               <ul className="my-2">
                 {menu.menus.map((e, index) => (
                   <li key={index}>
                     <Link
                       href={e.href}
-                      className="flex w-full align-center leading-none p-2 rounded-lg hover:bg-gray-200"
+                      className="flex w-full align-center leading-none p-5 rounded-lg hover:backdrop-brightness-75"
                       prefetch
                     >
-                      {<e.icon className="text-gray-900" />}
-                      <span className="pl-2 text-sm font-medium text-gray-500">
+                      {<e.icon className="text-gray-300" />}
+                      <span className="pl-2 text-sm text-gray-300">
                         {e.label}
                       </span>
                     </Link>

@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex: 2;
+}
+
+.content {
+  flex-grow: 1;
+  flex: 1;
+
+  @apply overflow-y-scroll max-h-screen;
+}
+
+.sidebar {
+  background-image: url("/sidebar_pattern.svg");
+  background-color: var(--mote-primary-color);
+
+  background-repeat: repeat;
+  flex-grow: 0.04;
+
+  @apply flex items-center flex-col min-h-screen;
+}

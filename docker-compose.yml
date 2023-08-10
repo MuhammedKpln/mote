@@ -1,39 +1,39 @@
 version: '3'
 
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.base
-      target: backend
-    command: yarn backend:dev:docker
-    volumes:
-      - ./apps/backend:/app/apps/backend
-      - ./packages:/app/packages
-      - /app/apps/backend/node_modules
-    env_file:
-      - ./apps/backend/.env
-    ports:
-      - 8000:8000
-    depends_on:
-      - postgres
-    networks:
-      - api_network
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.base
+  #     target: backend
+  #   command: yarn backend:dev:docker
+  #   volumes:
+  #     - ./apps/backend:/app/apps/backend
+  #     - ./packages:/app/packages
+  #     - /app/apps/backend/node_modules
+  #   env_file:
+  #     - ./apps/backend/.env
+  #   ports:
+  #     - 8000:8000
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - api_network
 
-  frontend:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.base
-      target: frontend
-    command: yarn frontend:dev:docker
-    volumes:
-      - ./apps/frontend:/app/apps/frontend
-      - ./packages:/app/packages
-      - /app/apps/frontend/node_modules
-    ports:
-      - 3000:3000
-    depends_on:
-      - backend
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile.base
+  #     target: frontend
+  #   command: yarn frontend:dev:docker
+  #   volumes:
+  #     - ./apps/frontend:/app/apps/frontend
+  #     - ./packages:/app/packages
+  #     - /app/apps/frontend/node_modules
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - backend
 
   postgres:
     image: postgres

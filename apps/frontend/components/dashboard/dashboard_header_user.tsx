@@ -1,4 +1,4 @@
-import userPic from "@/public/user.jpg";
+import userPic from "@/public/user.png";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { DropdownItem } from "../dropdown/dropdown_item";

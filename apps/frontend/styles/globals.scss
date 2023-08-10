@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --mote-primary-color: #457468;
+  --mote-text-gray-color: #b4c4bf;
+}
+
 @layer components {
   .btn {
     &.primary {
@@ -20,14 +25,21 @@
   }
 }
 
-body {
+html {
   height: 100%;
-  margin: 0px;
-  padding: 0px;
 
-  div[data-overlay-container] {
-    height: 100vh;
+  body {
+    height: 100%;
     margin: 0px;
     padding: 0px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+
+    div[data-overlay-container] {
+      height: 100vh;
+      margin: 0px;
+      padding: 0px;
+    }
   }
 }
