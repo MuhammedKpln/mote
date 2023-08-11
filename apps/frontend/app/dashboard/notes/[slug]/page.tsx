@@ -63,6 +63,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   }, [mutation, data, markdown, extractTitle]);
 
   useEffect(() => {
+    const autoSaveInterval = setInterval(
+      saveNote,
+      parseInt(process.env.NEXT_PUBLIC_AUTO_SAVE_INTERVAL!)
+    );
+
     const listener = (prevMode: PreviewType, newMode: PreviewType) => {
       if (prevMode === "edit" && newMode === "preview") {
         saveNote();
@@ -72,15 +77,20 @@ export default function Page({ params }: { params: { slug: string } }) {
     moteToolbarEventEmitter.on("previewChange", listener);
 
     return () => {
+      clearInterval(autoSaveInterval);
       moteToolbarEventEmitter.off("previewChange", listener);
     };
   }, [saveNote]);
+
+  const onChange = useCallback((e?: string) => {
+    if (e) setMarkdown(e);
+  }, []);
 
   return (
     <>
       <div id="content">
         <Skeleton isLoaded={!isLoading}>
-          <MoteEditor markdown={markdown} onChange={(e) => setMarkdown(e!)} />
+          <MoteEditor markdown={markdown} onChange={onChange} />
         </Skeleton>
       </div>
     </>

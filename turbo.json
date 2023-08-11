@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["NEXT_PUBLIC_API_URL"],
+  "globalEnv": ["NEXT_PUBLIC_API_URL", "NEXT_PUBLIC_AUTO_SAVE_INTERVAL"],
   "globalDependencies": [
     "**/.env.*local"
   ],
