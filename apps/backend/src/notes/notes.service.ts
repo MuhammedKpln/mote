@@ -1,10 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
 import { randomInt } from 'crypto';
-import { NoteResponseDto, NotesResponseDto, UpdateNoteDto } from 'mote-types';
+import {
+  CreateNoteDto,
+  NoteResponseDto,
+  NotesResponseDto,
+  UpdateNoteDto,
+} from 'mote-types';
 import slugify from 'slugify';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateNoteDto } from './dtos/createNote.dto';
 import { DeleteNote } from './dtos/deleteNote.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 

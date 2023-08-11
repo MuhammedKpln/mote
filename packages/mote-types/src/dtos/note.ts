@@ -39,3 +39,13 @@ export class UpdateNoteDto {
   @IsNumber()
   id: number;
 }
+
+export class CreateNoteDto {
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @IsNotEmpty()
+  @IsString()
+  content: string;
+}

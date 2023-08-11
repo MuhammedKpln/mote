@@ -11,11 +11,10 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { NotesResponseDto, UpdateNoteDto } from 'mote-types';
+import { CreateNoteDto, NotesResponseDto, UpdateNoteDto } from 'mote-types';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TransformDataInterceptor } from 'src/auth/interceptors/removePassword.interceptor';
 import RequestWithUser from 'src/auth/types/requestWithUser.interface';
-import { CreateNoteDto } from './dtos/createNote.dto';
 import { DeleteNote } from './dtos/deleteNote.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 import { NotesService } from './notes.service';

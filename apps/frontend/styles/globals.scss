@@ -4,7 +4,16 @@
 
 :root {
   --mote-primary-color: #457468;
+  --mote-surface-color: #849a95;
   --mote-text-gray-color: #b4c4bf;
+}
+
+@layer base {
+  :root {
+    --color-primary: 69 116 104;
+    --color-surface: 132 154 149;
+    --mote-text-gray-color: #b4c4bf;
+  }
 }
 
 @layer components {

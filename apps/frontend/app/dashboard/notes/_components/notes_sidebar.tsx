@@ -1,4 +1,5 @@
-import { FiSearch, FiTrash2 } from "react-icons/fi";
+import Link from "next/link";
+import { FiPlusCircle, FiSearch, FiTrash2 } from "react-icons/fi";
 
 interface IProps {
   children: React.ReactNode;
@@ -19,6 +20,9 @@ export function NotesSidebar({ children }: IProps) {
           <button type="button">
             <FiSearch className="text-xl text-neutral-300" />
           </button>
+          <Link href="/dashboard/notes/create">
+            <FiPlusCircle className="text-xl text-neutral-300" />
+          </Link>
         </div>
       </div>
 

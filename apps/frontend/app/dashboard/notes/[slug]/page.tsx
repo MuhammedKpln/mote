@@ -2,6 +2,7 @@
 import { queryClient } from "@/app/providers";
 import { MoteEditor } from "@/components/markdown_editor/markdown_editor";
 import { moteToolbarEventEmitter } from "@/components/markdown_editor/toolbar_event_emitter";
+import { extractTitle } from "@/lib/extract_title";
 import { noteService } from "@/services/note.service";
 import "@/styles/markdown_editor.scss";
 import { Skeleton } from "@nextui-org/skeleton";
@@ -38,16 +39,8 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   }, [data]);
 
-  const extractTitle = useCallback((): string | undefined => {
-    const splittedText = markdown.split("\n");
-
-    if (splittedText[0].startsWith("#")) {
-      return splittedText[0].replace("#", "").trim();
-    }
-  }, [markdown]);
-
   const saveNote = useCallback(() => {
-    const extractedTitle = extractTitle();
+    const extractedTitle = extractTitle(markdown);
 
     const promise = mutation.mutateAsync({
       id: data!.id,
@@ -60,7 +53,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       error: "Error!",
       loading: "Loading..",
     });
-  }, [mutation, data, markdown, extractTitle]);
+  }, [mutation, data, markdown]);
 
   useEffect(() => {
     const autoSaveInterval = setInterval(

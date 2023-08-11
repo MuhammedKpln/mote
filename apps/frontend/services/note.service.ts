@@ -1,4 +1,9 @@
-import { NoteResponseDto, NotesResponseDto, UpdateNoteDto } from "mote-types";
+import {
+  CreateNoteDto,
+  NoteResponseDto,
+  NotesResponseDto,
+  UpdateNoteDto,
+} from "mote-types";
 import { ApiPaths } from "./api.service";
 import { BaseService } from "./base.service";
 
@@ -17,6 +22,12 @@ class NoteService extends BaseService {
 
   async updateNote(data: UpdateNoteDto): Promise<NoteResponseDto> {
     const response = await this.axios.patch(ApiPaths.Notes, data);
+
+    return response.data;
+  }
+
+  async createNote(data: CreateNoteDto): Promise<NoteResponseDto> {
+    const response = await this.axios.post(ApiPaths.Notes, data);
 
     return response.data;
   }

@@ -9,7 +9,12 @@ module.exports = {
     '../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        motePrimary: 'rgb(var(--color-primary) / <alpha-value>)',
+        moteSurface: 'rgb(var(--color-surface) / <alpha-value>)',
+      }
+    },
   },
   plugins: [],
   darkMode: "class",
