@@ -38,10 +38,21 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   }, [data]);
 
+  const extractTitle = useCallback((): string | undefined => {
+    const splittedText = markdown.split("\n");
+
+    if (splittedText[0].startsWith("#")) {
+      return splittedText[0].replace("#", "").trim();
+    }
+  }, [markdown]);
+
   const saveNote = useCallback(() => {
+    const extractedTitle = extractTitle();
+
     const promise = mutation.mutateAsync({
       id: data!.id,
       content: markdown,
+      title: extractedTitle,
     });
 
     toast.promise(promise, {
@@ -49,7 +60,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       error: "Error!",
       loading: "Loading..",
     });
-  }, [mutation, data, markdown]);
+  }, [mutation, data, markdown, extractTitle]);
 
   useEffect(() => {
     const listener = (prevMode: PreviewType, newMode: PreviewType) => {
