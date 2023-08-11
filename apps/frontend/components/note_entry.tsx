@@ -1,0 +1,41 @@
+import { formatDistance, subDays } from "date-fns";
+import Link from "next/link";
+import { useMemo } from "react";
+
+interface IProps {
+  title: string;
+  short_content: string;
+  date: string;
+  slug: string;
+}
+
+export function NoteEntry({ title, short_content, date, slug }: IProps) {
+  const dateFormatted = useMemo(
+    () =>
+      formatDistance(subDays(Date.parse(date), 3), new Date(), {
+        addSuffix: true,
+      }),
+    [date]
+  );
+  const hrefRoute = useMemo(() => `/dashboard/notes/${slug}`, [slug]);
+
+  return (
+    <Link href={hrefRoute}>
+      <div
+        id="note-entry"
+        className="p-3 hover:backdrop-brightness-125 border-y-1 px-10"
+      >
+        <h6>{title}</h6>
+
+        <div
+          id="note-entry-details"
+          className="flex justify-between text-neutral-400 text-sm mt-3"
+        >
+          <p id="note-entry-description">{short_content}</p>
+
+          <p>{dateFormatted}</p>
+        </div>
+      </div>
+    </Link>
+  );
+}

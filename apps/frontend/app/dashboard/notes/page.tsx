@@ -1,3 +1,8 @@
+"use client";
+import { useAuthStore } from "@/app/store/auth.store";
+
 export default function Page() {
-  return <h1>selam</h1>;
+  const logout = useAuthStore((state) => state.logout);
+
+  return <button onClick={logout}>logout</button>;
 }

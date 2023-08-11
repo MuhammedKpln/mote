@@ -13,9 +13,9 @@ export function DashboardRootLayout({
       <DashboardSidebarNew />
 
       <div id="content" className={styles.content}>
-        <Suspense fallback="Loading..">
+        {/* <Suspense fallback="Loading..">
           <DashboardHeader />
-        </Suspense>
+        </Suspense> */}
         <Suspense fallback="Loading..">{children}</Suspense>
       </div>
     </div>

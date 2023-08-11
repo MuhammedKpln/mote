@@ -33,6 +33,10 @@ export default function Page({ params }: { params: { slug: string } }) {
     }
   }, [data]);
 
+  const toggleEditMote = useCallback(() => {
+    setEditMode(!editMode);
+  }, [editMode]);
+
   const saveNote = useCallback(() => {
     const promise = mutation
       .mutateAsync({
@@ -46,11 +50,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       error: "Error!",
       loading: "Loading..",
     });
-  }, [mutation]);
-
-  const toggleEditMote = useCallback(() => {
-    setEditMode(!editMode);
-  }, [editMode]);
+  }, [mutation, data, markdown, toggleEditMote]);
 
   const share = useCallback(() => {
     navigator.share({
@@ -58,7 +58,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       title: data?.title,
       text: data?.content,
     });
-  }, []);
+  }, [data]);
 
   return (
     <>
