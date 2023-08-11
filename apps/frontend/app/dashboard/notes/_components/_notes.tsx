@@ -24,7 +24,7 @@ export function Notes() {
         <NoteEntry
           title={note.title}
           short_content={note.content.substring(0, 50)}
-          date={note.created_at as unknown as string}
+          date={note.updated_at as unknown as string}
           slug={note.slug}
           isActive={routeParams.slug == note.slug ? true : false}
           key={note.id}
