@@ -20,22 +20,20 @@
   @apply flex items-center flex-col min-h-screen;
 }
 
-
 .notesContainer {
   @apply flex;
-  gap: 1
+  gap: 1;
 }
 
 .notesSidebar {
-  flex-grow: 0.4;
+  flex-grow: 1;
   max-width: 30%;
-  
+  min-width: 25%;
   @apply bg-neutral-100 h-full min-h-screen overflow-hidden;
 }
 
 .notesContent {
-  flex-grow: 1;
+  flex-grow: 2;
 
-  @apply overflow-y-scroll;
-
+  @apply overflow-y-auto  m-8 mt-5;
 }

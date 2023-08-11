@@ -1,0 +1,18 @@
+.w-md-editor-toolbar {
+  background-color: initial !important;
+
+  li > button > svg {
+    @apply w-4 h-4;
+  }
+
+  li > button {
+    height: initial !important;
+    color: initial !important;
+
+    @apply p-3 justify-center items-center leading-none m-auto;
+
+    &:hover {
+      color: var(--mote-primary-color);
+    }
+  }
+}

@@ -7,9 +7,16 @@ interface IProps {
   short_content: string;
   date: string;
   slug: string;
+  isActive: boolean;
 }
 
-export function NoteEntry({ title, short_content, date, slug }: IProps) {
+export function NoteEntry({
+  title,
+  short_content,
+  date,
+  slug,
+  isActive,
+}: IProps) {
   const dateFormatted = useMemo(
     () =>
       formatDistance(subDays(Date.parse(date), 3), new Date(), {
@@ -23,7 +30,9 @@ export function NoteEntry({ title, short_content, date, slug }: IProps) {
     <Link href={hrefRoute}>
       <div
         id="note-entry"
-        className="p-3 hover:backdrop-brightness-125 border-y-1 px-10"
+        className={`p-3 hover:backdrop-brightness-125 border-y-1 px-10 ${
+          isActive ? "backdrop-brightness-150 shadow-2xl" : null
+        }`}
       >
         <h6>{title}</h6>
 

@@ -5,8 +5,10 @@ import { MoteSpinner } from "@/components/spinner";
 import { noteService } from "@/services/note.service";
 import { useQuery } from "@tanstack/react-query";
 import { NotesResponseDto } from "mote-types";
+import { useParams } from "next/navigation";
 
 export function Notes() {
+  const routeParams = useParams();
   const { data, isLoading } = useQuery<NotesResponseDto>({
     queryFn: () => noteService.fetchNotes(),
     queryKey: ["notes"],
@@ -16,8 +18,6 @@ export function Notes() {
     return <MoteSpinner />;
   }
 
-  console.log(data);
-
   return (
     <>
       {data?.data.map((note) => (
@@ -26,6 +26,7 @@ export function Notes() {
           short_content={note.content.substring(0, 50)}
           date={note.created_at as unknown as string}
           slug={note.slug}
+          isActive={routeParams.slug == note.slug ? true : false}
           key={note.id}
         />
       ))}
