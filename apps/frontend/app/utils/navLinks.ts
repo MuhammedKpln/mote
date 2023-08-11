@@ -1,3 +1,4 @@
+import { RouterPaths } from "@/lib/router_paths";
 import { IMenuRoot } from "@/models/nav_link.model";
 import {
   FiArchive,
@@ -15,7 +16,7 @@ export const navLinks: IMenuRoot = {
         {
           label: "Dashboard",
           icon: FiHome,
-          href: "/dashboard",
+          href: RouterPaths.Dashboard,
         },
         {
           label: "Orders",
@@ -25,7 +26,7 @@ export const navLinks: IMenuRoot = {
         {
           label: "Notes",
           icon: FiUsers,
-          href: "/dashboard/notes",
+          href: RouterPaths.Notes,
         },
         {
           label: "Files",

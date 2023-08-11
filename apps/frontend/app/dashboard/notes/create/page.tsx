@@ -3,6 +3,7 @@
 import { queryClient } from "@/app/providers";
 import { MoteEditor } from "@/components/markdown_editor/markdown_editor";
 import { extractTitle } from "@/lib/extract_title";
+import { RouterPaths } from "@/lib/router_paths";
 import { noteService } from "@/services/note.service";
 import { useMutation } from "@tanstack/react-query";
 import { CreateNoteDto, NoteResponseDto, NotesResponseDto } from "mote-types";
@@ -33,7 +34,7 @@ export default function Page() {
         content: markdown,
       })
       .then((data) => {
-        router.push("/dashboard/notes/" + data.slug);
+        router.push(`${RouterPaths.CreateNote}/${data.slug}`);
       });
 
     toast.promise(promise, {

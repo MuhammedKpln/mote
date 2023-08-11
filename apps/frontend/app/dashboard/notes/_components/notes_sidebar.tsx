@@ -1,3 +1,4 @@
+import { RouterPaths } from "@/lib/router_paths";
 import Link from "next/link";
 import { FiPlusCircle, FiSearch, FiTrash2 } from "react-icons/fi";
 
@@ -20,7 +21,7 @@ export function NotesSidebar({ children }: IProps) {
           <button type="button">
             <FiSearch className="text-xl text-neutral-300" />
           </button>
-          <Link href="/dashboard/notes/create">
+          <Link href={RouterPaths.CreateNote}>
             <FiPlusCircle className="text-xl text-neutral-300" />
           </Link>
         </div>

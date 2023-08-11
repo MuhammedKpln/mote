@@ -1,3 +1,4 @@
+import { RouterPaths } from "@/lib/router_paths";
 import { IChipVariant } from "@/models/chip.model";
 import userPic from "@/public/user.png";
 import styles from "@/styles/single_entry.module.scss";
@@ -15,7 +16,7 @@ interface IProps {
 
 export function SingleEntry({ title, content, isLoaded, href }: IProps) {
   return (
-    <Link href={`/dashboard/notes/${href}`}>
+    <Link href={`${RouterPaths.Notes}/${href}`}>
       <div className="flex border rounded-md p-5 justify-between m-auto mb-5 hover:bg-gray-100">
         <div className="flex flex-col">
           <Skeleton isLoaded={isLoaded}>

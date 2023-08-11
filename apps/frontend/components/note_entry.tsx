@@ -1,3 +1,4 @@
+import { RouterPaths } from "@/lib/router_paths";
 import { formatDistance, subDays } from "date-fns";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -24,7 +25,7 @@ export function NoteEntry({
       }),
     [date]
   );
-  const hrefRoute = useMemo(() => `/dashboard/notes/${slug}`, [slug]);
+  const hrefRoute = useMemo(() => `${RouterPaths.Notes}/${slug}`, [slug]);
 
   return (
     <Link href={hrefRoute}>
