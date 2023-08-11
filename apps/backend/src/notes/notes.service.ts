@@ -26,6 +26,9 @@ export class NotesService {
         where: {
           userId,
         },
+        orderBy: {
+          updated_at: 'desc',
+        },
         skip: pageOptionsDto.offset,
         take: pageOptionsDto.limit,
         cursor: pageOptionsDto?.startingId
@@ -96,7 +99,10 @@ export class NotesService {
 
   async updateNote(note: UpdateNoteDto, userId: number): Promise<Note> {
     const createdNote = await this.prisma.note.update({
-      data: note,
+      data: {
+        ...note,
+        updated_at: new Date(),
+      },
       where: {
         id: note.id,
         userId,
