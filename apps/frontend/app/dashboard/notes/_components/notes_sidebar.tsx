@@ -7,6 +7,7 @@ import { noteService } from "@/services/note.service";
 import { useMutation } from "@tanstack/react-query";
 import { DeleteMultipleNotesDto, NotesResponseDto } from "mote-types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
 import { FiPlusCircle, FiSearch, FiTrash2 } from "react-icons/fi";
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 export function NotesSidebar({ children }: IProps) {
+  const router = useRouter();
   const mutation = useMutation<void, unknown, DeleteMultipleNotesDto>({
     mutationFn: (variables) => noteService.deleteMultipleNotes(variables),
   });
@@ -44,6 +46,7 @@ export function NotesSidebar({ children }: IProps) {
             };
           });
           toggleDeleteMode();
+          router.replace(RouterPaths.Notes);
         });
 
       toast.promise(promise, {
