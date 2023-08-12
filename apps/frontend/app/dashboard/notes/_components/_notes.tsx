@@ -2,6 +2,7 @@
 
 import { useNoteStore } from "@/app/store/note.store";
 import { NoteEntry } from "@/components/note_entry";
+import { MoteSpinner } from "@/components/spinner";
 import { RouterPaths } from "@/lib/router_paths";
 import { noteService } from "@/services/note.service";
 import { Checkbox } from "@nextui-org/checkbox";
@@ -17,10 +18,14 @@ export function Notes() {
     state.deleteMode,
     state.addToSelectedNotes,
   ]);
-  const { data } = useQuery<NotesResponseDto>({
+  const { data, isLoading } = useQuery<NotesResponseDto>({
     queryFn: () => noteService.fetchNotes(),
     queryKey: ["notes"],
   });
+
+  if (isLoading) {
+    return <MoteSpinner />;
+  }
 
   return (
     <>
