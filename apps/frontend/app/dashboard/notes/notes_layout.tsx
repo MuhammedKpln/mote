@@ -9,13 +9,13 @@ export function NotesLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.notesContainer}>
       <div id="sidebar" className={styles.notesSidebar}>
-        <NotesSidebar>
-          <Suspense fallback={<MoteSpinner />}>
+        <Suspense fallback={<MoteSpinner />}>
+          <NotesSidebar>
             <Notes />
 
             <CreateNote />
-          </Suspense>
-        </NotesSidebar>
+          </NotesSidebar>
+        </Suspense>
       </div>
 
       <div className={styles.notesContent}>{children}</div>
