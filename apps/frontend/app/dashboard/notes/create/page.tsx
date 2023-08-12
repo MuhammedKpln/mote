@@ -34,7 +34,7 @@ export default function Page() {
         content: markdown,
       })
       .then((data) => {
-        router.push(`${RouterPaths.CreateNote}/${data.slug}`);
+        router.push(`${RouterPaths.Notes}/${data.slug}`);
       });
 
     toast.promise(promise, {
