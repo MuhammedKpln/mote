@@ -1,6 +1,13 @@
 import { Note } from "@prisma/client";
 import { Exclude, Type } from "class-transformer";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import {
+  IsArray,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from "class-validator";
 import { UserResponseDto } from "./auth";
 
 export class NoteResponseDto implements Note {
@@ -48,4 +55,16 @@ export class CreateNoteDto {
   @IsNotEmpty()
   @IsString()
   content: string;
+}
+
+export class DeleteNoteDto {
+  @IsNotEmpty()
+  @IsInt()
+  id: number;
+}
+
+export class DeleteMultipleNotesDto {
+  @IsNotEmpty()
+  @IsArray()
+  ids: number[];
 }

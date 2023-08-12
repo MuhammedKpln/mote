@@ -3,13 +3,14 @@ import { Note } from '@prisma/client';
 import { randomInt } from 'crypto';
 import {
   CreateNoteDto,
+  DeleteMultipleNotesDto,
+  DeleteNoteDto,
   NoteResponseDto,
   NotesResponseDto,
   UpdateNoteDto,
 } from 'mote-types';
 import slugify from 'slugify';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { DeleteNote } from './dtos/deleteNote.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 
 @Injectable()
@@ -116,7 +117,7 @@ export class NotesService {
     return createdNote;
   }
 
-  async deleteNote(note: DeleteNote, userId: number): Promise<Note> {
+  async deleteNote(note: DeleteNoteDto, userId: number): Promise<Note> {
     const createdNote = await this.prisma.note.delete({
       where: {
         id: note.id,
@@ -125,6 +126,27 @@ export class NotesService {
     });
 
     return createdNote;
+  }
+
+  async deleteMultipleNotes(
+    selection: DeleteMultipleNotesDto,
+    userId: number,
+  ): Promise<void> {
+    try {
+      await this.prisma.note.deleteMany({
+        where: {
+          id: {
+            in: selection.ids,
+          },
+          userId,
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Could not delete notes',
+        HttpStatus.NOT_MODIFIED,
+      );
+    }
   }
 
   async getSingleBySlug(

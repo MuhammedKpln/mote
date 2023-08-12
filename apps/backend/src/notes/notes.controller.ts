@@ -11,11 +11,16 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { CreateNoteDto, NotesResponseDto, UpdateNoteDto } from 'mote-types';
+import {
+  CreateNoteDto,
+  DeleteMultipleNotesDto,
+  DeleteNoteDto,
+  NotesResponseDto,
+  UpdateNoteDto,
+} from 'mote-types';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { TransformDataInterceptor } from 'src/auth/interceptors/removePassword.interceptor';
 import RequestWithUser from 'src/auth/types/requestWithUser.interface';
-import { DeleteNote } from './dtos/deleteNote.dto';
 import { PaginationParamsDto } from './dtos/pagination.dto';
 import { NotesService } from './notes.service';
 
@@ -52,7 +57,15 @@ export class NotesController {
   }
 
   @Delete('/')
-  deleteNote(@Body() body: DeleteNote, @Req() request: RequestWithUser) {
+  deleteNote(@Body() body: DeleteNoteDto, @Req() request: RequestWithUser) {
     return this.notesService.deleteNote(body, request.user.id);
+  }
+
+  @Delete('/selections')
+  deleteMultipleNotes(
+    @Body() body: DeleteMultipleNotesDto,
+    @Req() request: RequestWithUser,
+  ) {
+    return this.notesService.deleteMultipleNotes(body, request.user.id);
   }
 }
