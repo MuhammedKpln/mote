@@ -1,5 +1,6 @@
 import {
   CreateNoteDto,
+  DeleteMultipleNotesDto,
   NoteResponseDto,
   NotesResponseDto,
   UpdateNoteDto,
@@ -30,6 +31,12 @@ class NoteService extends BaseService {
     const response = await this.axios.post(ApiPaths.Notes, data);
 
     return response.data;
+  }
+
+  async deleteMultipleNotes(data: DeleteMultipleNotesDto): Promise<void> {
+    await this.axios.delete(ApiPaths.DeleteMultipleNotes, {
+      data,
+    });
   }
 }
 

@@ -29,7 +29,7 @@
   flex-grow: 1;
   max-width: 30%;
   min-width: 25%;
-  @apply bg-neutral-100 h-full max-h-screen overflow-auto;
+  @apply bg-neutral-100 h-screen max-h-screen overflow-auto;
 }
 
 .notesContent {

@@ -1,6 +1,4 @@
-import { RouterPaths } from "@/lib/router_paths";
 import { formatDistance, subDays } from "date-fns";
-import Link from "next/link";
 import { useMemo } from "react";
 
 interface IProps {
@@ -9,6 +7,8 @@ interface IProps {
   date: string;
   slug: string;
   isActive: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 export function NoteEntry({
@@ -17,6 +17,8 @@ export function NoteEntry({
   date,
   slug,
   isActive,
+  disabled,
+  onClick,
 }: IProps) {
   const dateFormatted = useMemo(
     () =>
@@ -25,27 +27,25 @@ export function NoteEntry({
       }),
     [date]
   );
-  const hrefRoute = useMemo(() => `${RouterPaths.Notes}/${slug}`, [slug]);
 
   return (
-    <Link href={hrefRoute}>
+    <div
+      onClick={onClick}
+      id="note-entry"
+      className={`p-3 hover:backdrop-brightness-125 border-y-1 px-10 cursor-pointer ${
+        isActive ? "backdrop-brightness-150 shadow-2xl" : null
+      }`}
+    >
+      <h6>{title}</h6>
+
       <div
-        id="note-entry"
-        className={`p-3 hover:backdrop-brightness-125 border-y-1 px-10 ${
-          isActive ? "backdrop-brightness-150 shadow-2xl" : null
-        }`}
+        id="note-entry-details"
+        className="flex justify-between text-neutral-400 text-sm mt-3"
       >
-        <h6>{title}</h6>
+        <p id="note-entry-description">{short_content}</p>
 
-        <div
-          id="note-entry-details"
-          className="flex justify-between text-neutral-400 text-sm mt-3"
-        >
-          <p id="note-entry-description">{short_content}</p>
-
-          <p>{dateFormatted}</p>
-        </div>
+        <p>{dateFormatted}</p>
       </div>
-    </Link>
+    </div>
   );
 }

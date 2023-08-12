@@ -17,7 +17,7 @@ export default function Page() {
   const router = useRouter();
   const mutation = useMutation<NoteResponseDto, unknown, CreateNoteDto>({
     mutationFn: (variables) => noteService.createNote(variables),
-    onSuccess(data, variables, context) {
+    onSuccess(data, _, __) {
       queryClient.setQueryData<NotesResponseDto>(["notes"], (cachedData) => {
         cachedData?.data.push(data);
 
