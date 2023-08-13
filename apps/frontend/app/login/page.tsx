@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@nextui-org/input";
 import { useMutation } from "@tanstack/react-query";
 import { LoginDto, LoginResponseDto } from "mote-types";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -23,6 +23,7 @@ export default function LoginPage() {
       password: Yup.string().required().min(5),
     });
   }, []);
+
   const {
     register,
     handleSubmit,
@@ -45,27 +46,18 @@ export default function LoginPage() {
     [router, saveAuth]
   );
 
-  const onSubmit = useCallback(
-    async ({ email, password }: LoginDto) => {
-      const promise =  signIn("credentials", {
-        email,
-        password,
-      });
-      // const promise = mutation.mutateAsync({
-      //   email,
-      //   password,
-      // });
+  const onSubmit = useCallback(async ({ email, password }: LoginDto) => {
+    const promise = signIn("credentials", {
+      email,
+      password,
+    });
 
-      toast.promise(promise, {
-        loading: "Logging in..",
-        error: "Could not login",
-        success: "Logged in!",
-      });
-
-      // router.push("/dashboard");
-    },
-    [router, mutation]
-  );
+    toast.promise(promise, {
+      loading: "Logging in..",
+      error: "Could not login",
+      success: "Logged in!",
+    });
+  }, []);
 
   return (
     <>
@@ -121,13 +113,6 @@ export default function LoginPage() {
               Not a member? <a className="text-blue-600">Create Account</a>
             </p>
           </form>
-          <button
-            type="submit"
-            className="btn primary w-full"
-            onClick={() => signOut()}
-          >
-            Logout
-          </button>
         </div>
       </div>
     </>

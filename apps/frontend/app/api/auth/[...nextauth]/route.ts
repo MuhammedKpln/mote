@@ -2,7 +2,6 @@ import { authService } from "@/services/auth.service";
 import NextAuth, { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-
 export const authHandler: AuthOptions = {
   session: {
     strategy: "jwt",
@@ -11,7 +10,7 @@ export const authHandler: AuthOptions = {
     signIn: "/login",
   },
   jwt: {
-    maxAge: parseInt(process.env.JWT_MAX_AGE!)
+    maxAge: parseInt(process.env.JWT_MAX_AGE!),
   },
   providers: [
     Credentials({
@@ -57,6 +56,9 @@ export const authHandler: AuthOptions = {
       }
 
       return token;
+    },
+    redirect: () => {
+      return "/dashboard";
     },
   },
 };

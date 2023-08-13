@@ -10,9 +10,9 @@ export function DashboardSidebarUser() {
   return (
     <div
       id="user"
-      className="absolute bottom-0 rounded-lg bg-white bg-opacity-20 p-3 m-5 cursor-pointer"
+      className="absolute bottom-0 rounded-lg bg-white bg-opacity-20 p-3 m-5  cursor-pointer"
     >
-      <div id="wrapper" className="flex flex-1 justify-around">
+      <div id="wrapper" className="flex">
         <Image
           src={userPic}
           alt="user"
@@ -20,7 +20,7 @@ export function DashboardSidebarUser() {
           height={50}
           className="rounded-lg bg-cover w-13"
         />
-        <div id="info" className="ml-3 leading-none m-auto">
+        <div id="info" className="ml-3 leading-none m-auto ">
           <p className="text-white text-sm">{data?.user?.name}</p>
           <p className="text-gray-300 italic text-sm">{data?.user?.email}</p>
         </div>
