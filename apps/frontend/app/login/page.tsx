@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@nextui-org/input";
 import { useMutation } from "@tanstack/react-query";
 import { LoginDto, LoginResponseDto } from "mote-types";
+import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
@@ -46,10 +47,14 @@ export default function LoginPage() {
 
   const onSubmit = useCallback(
     async ({ email, password }: LoginDto) => {
-      const promise = mutation.mutateAsync({
+      const promise =  signIn("credentials", {
         email,
         password,
       });
+      // const promise = mutation.mutateAsync({
+      //   email,
+      //   password,
+      // });
 
       toast.promise(promise, {
         loading: "Logging in..",
@@ -57,7 +62,7 @@ export default function LoginPage() {
         success: "Logged in!",
       });
 
-      router.push("/dashboard");
+      // router.push("/dashboard");
     },
     [router, mutation]
   );
@@ -116,6 +121,13 @@ export default function LoginPage() {
               Not a member? <a className="text-blue-600">Create Account</a>
             </p>
           </form>
+          <button
+            type="submit"
+            className="btn primary w-full"
+            onClick={() => signOut()}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </>

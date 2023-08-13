@@ -1,5 +1,5 @@
-import { useAuthStore } from "@/app/store/auth.store";
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import { getSession } from "next-auth/react";
 
 export class BaseService {
   protected axios: AxiosInstance;
@@ -14,12 +14,18 @@ export class BaseService {
     );
   }
 
-  private authInterceptor(
+  private async authInterceptor(
     config: InternalAxiosRequestConfig
-  ): InternalAxiosRequestConfig {
+  ): Promise<InternalAxiosRequestConfig> {
     if (config.headers) {
-      const accessToken = useAuthStore.getState().accessToken;
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.withCredentials = true
+
+      const session = await getSession()
+      const accessToken = (session as any)?.token;
+      
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
     }
 
     return config;

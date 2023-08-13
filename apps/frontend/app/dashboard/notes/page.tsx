@@ -1,8 +1,6 @@
 "use client";
-import { useAuthStore } from "@/app/store/auth.store";
+import { signOut } from "next-auth/react";
 
 export default function Page() {
-  const logout = useAuthStore((state) => state.logout);
-
-  return <button onClick={logout}>logout</button>;
+  return <button onClick={() => signOut()}>logout</button>;
 }
