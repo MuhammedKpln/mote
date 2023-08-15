@@ -12,7 +12,6 @@
         "class-validator": "^0.14.0"
     },
     "devDependencies": {
-        "typescript": "^4.5.2",
-        "@prisma/client": "*"
+        "typescript": "^4.5.2"
     }
 }
