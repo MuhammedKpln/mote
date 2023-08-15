@@ -1,9 +1,8 @@
 "use client";
 
-import MDEditor, { PreviewType } from "@uiw/react-md-editor";
+import { PreviewType } from "@uiw/react-md-editor";
+import { Editable, useEditor } from "@wysimark/react";
 import { useEffect, useState } from "react";
-import { MoteToolbarCommands } from "./toolbar_commands";
-import { MoteToolbarExtraCommands } from "./toolbar_extra_commands";
 
 interface IProps {
   markdown: string;
@@ -13,25 +12,25 @@ interface IProps {
 
 export function MoteEditor({ markdown, onChange, previewMode }: IProps) {
   const [height, setHeight] = useState(300);
+  const editor = useEditor({
+    authToken: "qwe",
+    minHeight: 300,
+  });
 
   useEffect(() => {
-    if (!window) {
-      return;
-    }
+    editor.upload.onUploadImageFile = (e) => {
+      console.log(e.file);
 
-    setHeight(window.innerHeight);
+      return false;
+    };
   }, []);
 
   return (
-    <MDEditor
+    <Editable
       value={markdown}
       onChange={onChange}
-      preview={previewMode ?? "preview"}
-      toolbarHeight={50}
-      height={height}
-      commands={MoteToolbarCommands}
-      extraCommands={MoteToolbarExtraCommands}
-      highlightEnable
+      editor={editor}
+      placeholder="Start write down something!"
     />
   );
 }

@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
 import { randomInt } from 'crypto';
 import {
+  ApplyTagToNoteDto,
   CreateNoteDto,
   DeleteMultipleNotesDto,
   DeleteNoteDto,
@@ -43,6 +44,7 @@ export class NotesService {
           : undefined,
         include: {
           user: true,
+          tags: true,
         },
       }),
     ]);
@@ -86,14 +88,31 @@ export class NotesService {
   async createNote(note: CreateNoteDto, userId: number): Promise<Note> {
     const _randomInt = randomInt(1000);
     const modifiedTitle = `${note.title}-${_randomInt}`;
-    const slug = slugify(modifiedTitle);
+    const titleSlug = slugify(modifiedTitle);
+
+    const data: any = {
+      content: note.content,
+      title: note.title,
+      userId,
+      slug: titleSlug,
+    };
+
+    const tags = note.tags?.map((tag) => ({
+      label: tag.label,
+      userId,
+      slug: slugify(`${tag.label}-${randomInt(1000)}`),
+    }));
+
+    if (tags) {
+      data['tags'] = {
+        createMany: {
+          data: tags,
+        },
+      };
+    }
 
     const createdNote = await this.prisma.note.create({
-      data: {
-        ...note,
-        userId,
-        slug,
-      },
+      data: data,
       include: {
         user: true,
       },
@@ -168,5 +187,38 @@ export class NotesService {
     }
 
     return note;
+  }
+
+  async applyTagToNote(tag: ApplyTagToNoteDto, userId: number) {
+    const _randomInt = randomInt(1000);
+    const modifiedLabel = `${tag.label}-${_randomInt}`;
+    const labelSlug = slugify(modifiedLabel);
+
+    try {
+      await this.prisma.note.update({
+        where: {
+          id: tag.noteId,
+        },
+        data: {
+          tags: {
+            connectOrCreate: {
+              where: {
+                label: tag.label,
+              },
+              create: {
+                label: tag.label,
+                slug: labelSlug,
+                userId,
+              },
+            },
+          },
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        'Check if tags does not have same label',
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
   }
 }

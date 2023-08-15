@@ -1,4 +1,4 @@
-import { Note } from "@prisma/client";
+import { Note, Tag } from "@prisma/client";
 import { Exclude, Type } from "class-transformer";
 import {
   IsArray,
@@ -7,6 +7,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  ValidateNested,
 } from "class-validator";
 import { UserResponseDto } from "./auth";
 
@@ -18,6 +19,10 @@ export class NoteResponseDto implements Note {
   userId: number;
   created_at: Date;
   updated_at: Date;
+
+  @Type(() => TagDto)
+  @IsOptional()
+  tags?: TagDto[];
 
   @Exclude()
   deleted_at: Date | null;
@@ -47,6 +52,24 @@ export class UpdateNoteDto {
   id: number;
 }
 
+export class TagDto implements Tag {
+  @IsNumber()
+  id: number;
+  @IsString()
+  label: string;
+  @IsString()
+  slug: string;
+  @IsNumber()
+  userId: number;
+  @IsNumber()
+  noteId: number;
+}
+
+export class CreateTagWithNoteDto {
+  @IsString()
+  label: string;
+}
+
 export class CreateNoteDto {
   @IsNotEmpty()
   @IsString()
@@ -55,6 +78,12 @@ export class CreateNoteDto {
   @IsNotEmpty()
   @IsString()
   content: string;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateTagWithNoteDto)
+  tags?: CreateTagWithNoteDto[];
 }
 
 export class DeleteNoteDto {
@@ -67,4 +96,9 @@ export class DeleteMultipleNotesDto {
   @IsNotEmpty()
   @IsArray()
   ids: number[];
+}
+
+export class ApplyTagToNoteDto extends CreateTagWithNoteDto {
+  @IsNumber()
+  noteId: number;
 }
