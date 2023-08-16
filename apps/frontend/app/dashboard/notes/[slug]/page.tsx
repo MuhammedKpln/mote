@@ -12,11 +12,13 @@ import { PreviewType } from "@uiw/react-md-editor";
 import { NoteResponseDto, NotesResponseDto, UpdateNoteDto } from "mote-types";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { NoteTags } from "../_components/_tags";
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<NoteResponseDto, void>({
     queryFn: () => noteService.fetchSingleNote(params.slug),
     queryKey: [params.slug],
+    suspense: true,
   });
   const mutation = useMutation<NoteResponseDto, unknown, UpdateNoteDto>({
     mutationFn: (variables) => noteService.updateNote(variables),
@@ -31,6 +33,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       });
     },
   });
+
   const [markdown, setMarkdown] = useState<string>("");
 
   useEffect(() => {
@@ -82,6 +85,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <div id="content">
+        <h1 className="text-2xl ">{data?.title}</h1>
+
+        <NoteTags tags={data?.tags!} noteId={data!.id} noteSlug={params.slug} />
+
         <Skeleton isLoaded={!isLoading}>
           <MoteEditor markdown={markdown} onChange={onChange} />
         </Skeleton>

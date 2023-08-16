@@ -12,7 +12,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
-  ApplyTagToNoteDto,
   CreateNoteDto,
   DeleteMultipleNotesDto,
   DeleteNoteDto,
@@ -68,13 +67,5 @@ export class NotesController {
     @Req() request: RequestWithUser,
   ) {
     return this.notesService.deleteMultipleNotes(body, request.user.id);
-  }
-
-  @Post('/apply-tag')
-  applyTagToNote(
-    @Body() body: ApplyTagToNoteDto,
-    @Req() request: RequestWithUser,
-  ) {
-    return this.notesService.applyTagToNote(body, request.user.id);
   }
 }

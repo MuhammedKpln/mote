@@ -1,0 +1,23 @@
+.rti--container {
+    --rti-tag:#f6f7f7!important;
+    border:none!important;
+    width: 100%!important;
+
+    &::focus {
+        border:none!important;
+        outline:none!important;
+    }
+
+    input::focus {
+        border:none!important;
+        outline:none!important;
+
+    }
+
+
+    .rti--tag {
+        border: 1px solid #6b8680!important;
+        color:#6b8680!important;
+        font-size: 13px !important;
+    }
+  }

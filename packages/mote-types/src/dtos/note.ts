@@ -1,4 +1,4 @@
-import { Note, Tag } from "@prisma/client";
+import { Note } from "@prisma/client";
 import { Exclude, Type } from "class-transformer";
 import {
   IsArray,
@@ -10,6 +10,7 @@ import {
   ValidateNested,
 } from "class-validator";
 import { UserResponseDto } from "./auth";
+import { CreateTagWithNoteDto, TagDto } from "./tag";
 
 export class NoteResponseDto implements Note {
   slug: string;
@@ -52,24 +53,6 @@ export class UpdateNoteDto {
   id: number;
 }
 
-export class TagDto implements Tag {
-  @IsNumber()
-  id: number;
-  @IsString()
-  label: string;
-  @IsString()
-  slug: string;
-  @IsNumber()
-  userId: number;
-  @IsNumber()
-  noteId: number;
-}
-
-export class CreateTagWithNoteDto {
-  @IsString()
-  label: string;
-}
-
 export class CreateNoteDto {
   @IsNotEmpty()
   @IsString()
@@ -96,9 +79,4 @@ export class DeleteMultipleNotesDto {
   @IsNotEmpty()
   @IsArray()
   ids: number[];
-}
-
-export class ApplyTagToNoteDto extends CreateTagWithNoteDto {
-  @IsNumber()
-  noteId: number;
 }

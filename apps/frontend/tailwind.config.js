@@ -13,6 +13,7 @@ module.exports = {
       colors: {
         motePrimary: 'rgb(var(--color-primary) / <alpha-value>)',
         moteSurface: 'rgb(var(--color-surface) / <alpha-value>)',
+        moteChip: 'rgb(var(--color-chip) / <alpha-value>)',
       }
     },
   },

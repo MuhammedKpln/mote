@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Note } from '@prisma/client';
 import { randomInt } from 'crypto';
 import {
-  ApplyTagToNoteDto,
   CreateNoteDto,
   DeleteMultipleNotesDto,
   DeleteNoteDto,
@@ -115,6 +114,7 @@ export class NotesService {
       data: data,
       include: {
         user: true,
+        tags: true,
       },
     });
 
@@ -179,6 +179,7 @@ export class NotesService {
       },
       include: {
         user: true,
+        tags: true,
       },
     });
 
@@ -187,38 +188,5 @@ export class NotesService {
     }
 
     return note;
-  }
-
-  async applyTagToNote(tag: ApplyTagToNoteDto, userId: number) {
-    const _randomInt = randomInt(1000);
-    const modifiedLabel = `${tag.label}-${_randomInt}`;
-    const labelSlug = slugify(modifiedLabel);
-
-    try {
-      await this.prisma.note.update({
-        where: {
-          id: tag.noteId,
-        },
-        data: {
-          tags: {
-            connectOrCreate: {
-              where: {
-                label: tag.label,
-              },
-              create: {
-                label: tag.label,
-                slug: labelSlug,
-                userId,
-              },
-            },
-          },
-        },
-      });
-    } catch (error) {
-      throw new HttpException(
-        'Check if tags does not have same label',
-        HttpStatus.NOT_ACCEPTABLE,
-      );
-    }
   }
 }
