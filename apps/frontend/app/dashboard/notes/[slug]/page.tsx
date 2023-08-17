@@ -82,6 +82,13 @@ export default function Page({ params }: { params: { slug: string } }) {
     if (e) setMarkdown(e);
   }, []);
 
+  const onBlur = useCallback(
+    (e?: string) => {
+      saveNote();
+    },
+    [saveNote]
+  );
+
   return (
     <>
       <div id="content">
@@ -90,7 +97,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <NoteTags tags={data?.tags!} noteId={data!.id} noteSlug={params.slug} />
 
         <Skeleton isLoaded={!isLoading}>
-          <MoteEditor markdown={markdown} onChange={onChange} />
+          <MoteEditor markdown={markdown} onChange={onChange} onBlur={onBlur} />
         </Skeleton>
       </div>
     </>

@@ -106,13 +106,16 @@ export class TagsService {
         },
         data: {
           tags: {
-            createMany: {
-              data: data.tags.map((e) => ({
+            connectOrCreate: data.tags.map((e) => ({
+              create: {
                 label: e,
                 slug: slugify(`${e}-${randomInt(1000)}`),
                 userId,
-              })),
-            },
+              },
+              where: {
+                label: e,
+              },
+            })),
           },
         },
         include: {
