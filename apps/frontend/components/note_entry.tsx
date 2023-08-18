@@ -1,8 +1,8 @@
 import { formatDistance, subDays } from "date-fns";
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 
 interface IProps {
-  title: string;
+  title: ReactNode;
   short_content: string;
   date: string;
   slug: string;

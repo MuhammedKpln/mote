@@ -81,7 +81,7 @@ export function NotesSidebar({ children }: IProps) {
         duration: Infinity,
       }
     );
-  }, [mutation, selectedNotes, toggleDeleteMode]);
+  }, [mutation, selectedNotes, toggleDeleteMode, router]);
 
   return (
     <section id="notes-sidebar" className="mt-3 flex flex-col">

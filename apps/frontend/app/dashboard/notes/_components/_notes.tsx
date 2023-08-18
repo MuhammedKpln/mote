@@ -1,19 +1,25 @@
 "use client";
 
+import { queryClient } from "@/app/providers";
 import { useNoteStore } from "@/app/store/note.store";
 import { NoteEntry } from "@/components/note_entry";
 import { MoteSpinner } from "@/components/spinner";
 import { RouterPaths } from "@/lib/router_paths";
 import { noteService } from "@/services/note.service";
 import { Checkbox } from "@nextui-org/checkbox";
+import { Input } from "@nextui-org/input";
 import { cn } from "@nextui-org/system";
 import { useQuery } from "@tanstack/react-query";
 import { NotesResponseDto } from "mote-types";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useEffect, useMemo, useRef } from "react";
+import { useForm } from "react-hook-form";
+import reactStringReplace from "react-string-replace";
 
 export function Notes() {
   const routeParams = useParams();
+  const { register, handleSubmit, watch } = useForm();
   const [deleteMode, addToSelectedNotes] = useNoteStore((state) => [
     state.deleteMode,
     state.addToSelectedNotes,
@@ -22,6 +28,48 @@ export function Notes() {
     queryFn: () => noteService.fetchNotes(),
     queryKey: ["notes"],
   });
+  const oldData = useRef<NotesResponseDto>();
+  const noteTags = useMemo(() => {
+    return data?.data.map((e) => e.tags);
+  }, [data]);
+
+  const searchQuery: string = watch("search");
+
+  useEffect(() => {
+    if (searchQuery && searchQuery.length > 0) {
+      queryClient.setQueryData<NotesResponseDto>(["notes"], (old) => {
+        //TODO: implement search by tag:
+
+        const titleData = old!.data.filter((e) =>
+          e.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+        );
+        const contentData = old!.data.filter((e) =>
+          e.content.includes(searchQuery)
+        );
+
+        const data = [...titleData, ...contentData];
+
+        console.log(data, searchQuery);
+
+        return {
+          data,
+          count: old?.count,
+        };
+      });
+    } else {
+      queryClient.setQueryData<NotesResponseDto>(["notes"], () => {
+        return oldData.current;
+      });
+    }
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (data) {
+      if (!oldData.current) {
+        oldData.current = data;
+      }
+    }
+  }, [data]);
 
   if (isLoading) {
     return <MoteSpinner />;
@@ -29,6 +77,13 @@ export function Notes() {
 
   return (
     <>
+      <div className="p-5">
+        <Input
+          placeholder="Search for some notes,tags.."
+          {...register("search")}
+        />
+      </div>
+
       {data?.data.map((note) => {
         if (deleteMode) {
           return (
@@ -60,7 +115,9 @@ export function Notes() {
             key={note.id}
           >
             <NoteEntry
-              title={note.title}
+              title={reactStringReplace(note.title, searchQuery, (match) => (
+                <span className="text-motePrimary">{match}</span>
+              ))}
               short_content={note.content.substring(0, 50)}
               date={note.updated_at as unknown as string}
               slug={note.slug}

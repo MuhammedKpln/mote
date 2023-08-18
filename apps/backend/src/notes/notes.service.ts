@@ -25,6 +25,10 @@ export class NotesService {
       return this.searchForNotes(pageOptionsDto.search, userId);
     }
 
+    if (pageOptionsDto.tag) {
+      return this.filterPostsByTag(pageOptionsDto.tag, userId);
+    }
+
     const [count, items] = await this.prisma.$transaction([
       this.prisma.note.count(),
       this.prisma.note.findMany({
@@ -76,6 +80,34 @@ export class NotesService {
       },
       include: {
         user: true,
+        tags: true,
+      },
+    });
+
+    return {
+      data,
+    };
+  }
+
+  private async filterPostsByTag(
+    tag: string,
+    userId: number,
+  ): Promise<NotesResponseDto> {
+    console.log(tag);
+    const data = await this.prisma.note.findMany({
+      where: {
+        tags: {
+          some: {
+            label: {
+              equals: tag.toLowerCase(),
+            },
+          },
+        },
+        userId,
+      },
+      include: {
+        user: true,
+        tags: true,
       },
     });
 

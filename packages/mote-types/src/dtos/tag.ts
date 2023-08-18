@@ -1,6 +1,7 @@
 import { Tag } from "@prisma/client";
 import { Type } from "class-transformer";
 import {
+  ArrayMinSize,
   IsArray,
   IsNotEmpty,
   IsNumber,
@@ -41,7 +42,7 @@ export class DiscardTagFromNote {
   id: number;
 }
 
-export declare class BunchDeleteTagsFromNotes {
+export class BunchDeleteTagsFromNotes {
   @IsNotEmpty()
   noteId: number;
 
@@ -52,11 +53,14 @@ export declare class BunchDeleteTagsFromNotes {
   tags: TagDto[];
 }
 
-export declare class BunchAddTagsFromNotes {
+export class BunchAddTagsFromNotes {
   @IsNotEmpty()
+  @IsNumber()
   noteId: number;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ each: true })
+  @ArrayMinSize(1)
   @IsArray()
+  @IsString({ each: true })
   tags: string[];
 }

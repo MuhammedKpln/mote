@@ -8,10 +8,8 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
-  ApplyTagToNoteDto,
   BunchAddTagsFromNotes,
   BunchDeleteTagsFromNotes,
-  DiscardTagFromNote,
   NotesResponseDto,
 } from 'mote-types';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
@@ -24,22 +22,6 @@ import { TagsService } from './tags.service';
 @UseInterceptors(new TransformDataInterceptor(NotesResponseDto))
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}
-
-  @Post('/apply')
-  applyTagToNote(
-    @Body() body: ApplyTagToNoteDto,
-    @Req() request: RequestWithUser,
-  ) {
-    return this.tagsService.applyTagToNote(body, request.user.id);
-  }
-
-  @Post('/discard')
-  discardTagFromNote(
-    @Body() body: DiscardTagFromNote,
-    @Req() request: RequestWithUser,
-  ) {
-    return this.tagsService.discardTagFromNote(body, request.user.id);
-  }
 
   @Delete('/selections')
   bunchDelete(
@@ -54,6 +36,7 @@ export class TagsController {
     @Body() body: BunchAddTagsFromNotes,
     @Req() request: RequestWithUser,
   ) {
+    console.log(body);
     return this.tagsService.bunchAdd(body, request.user.id);
   }
 }

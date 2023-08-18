@@ -1,6 +1,10 @@
 {
-  "extends": "tsconfig/nestjs.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDecoratorMetadata": true
   }
 }
