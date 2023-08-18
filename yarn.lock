@@ -2413,6 +2413,20 @@
   dependencies:
     "@types/node" "*"
 
+"@types/lodash.filter@^4.6.7":
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.filter/-/lodash.filter-4.6.7.tgz#ff5d20d824cba30186a23336c568207da1e50d08"
+  integrity sha512-ka742YGB8YavNRe8grQ5zFBiJBHPjmgT99lAq4Od5FwKKege5pTd/b8arGGzVePc2x90C7U7jcLeaQw+q0lFBA==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash.find@^4.6.7":
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.find/-/lodash.find-4.6.7.tgz#a29f20d9e9cb09a14f5caf0ea04c8debc4c8fa7e"
+  integrity sha512-ESwK5k3nf9ufS+M2niH06/gjrREihHobyWQLs5c5+O93uar3N9s0rNx8bBfG9zLYVaPBJEsEIk06hm5ccstF5w==
+  dependencies:
+    "@types/lodash" "*"
+
 "@types/lodash.uniqby@^4.7.7":
   version "4.7.7"
   resolved "https://registry.yarnpkg.com/@types/lodash.uniqby/-/lodash.uniqby-4.7.7.tgz#48dbb652c41cc8fb30aa61a44174368081835ab5"
@@ -6857,6 +6871,16 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
+
+lodash.filter@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.filter/-/lodash.filter-4.6.0.tgz#668b1d4981603ae1cc5a6fa760143e480b4c4ace"
+  integrity sha512-pXYUy7PR8BCLwX5mgJ/aNtyOvuJTdZAo9EQFUvMIYugqmJxnrYaANvTbgndOzHSCSR0wnlBBfRXJL5SbWxo3FQ==
+
+lodash.find@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.find/-/lodash.find-4.6.0.tgz#cb0704d47ab71789ffa0de8b97dd926fb88b13b1"
+  integrity sha512-yaRZoAV3Xq28F1iafWN1+a0rflOej93l1DQUejs3SZ41h2O9UJBoS9aueGjPDgAl4B6tPC0NuuchLKaDQQ3Isg==
 
 lodash.foreach@^4.5.0:
   version "4.5.0"

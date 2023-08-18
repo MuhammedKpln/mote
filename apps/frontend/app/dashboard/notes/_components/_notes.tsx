@@ -5,12 +5,12 @@ import { useNoteStore } from "@/app/store/note.store";
 import { NoteEntry } from "@/components/note_entry";
 import { MoteSpinner } from "@/components/spinner";
 import { RouterPaths } from "@/lib/router_paths";
+import { search } from "@/lib/search";
 import { noteService } from "@/services/note.service";
 import { Checkbox } from "@nextui-org/checkbox";
 import { Input } from "@nextui-org/input";
 import { cn } from "@nextui-org/system";
 import { useQuery } from "@tanstack/react-query";
-import uniqBy from "lodash.uniqby";
 import { NotesResponseDto } from "mote-types";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -35,25 +35,12 @@ export function Notes() {
 
   useEffect(() => {
     if (searchQuery && searchQuery.length > 0) {
-      queryClient.setQueryData<NotesResponseDto>(["notes"], (old) => {
-        //TODO: implement search by tag:
+      const searchData = search(searchQuery, oldData.current!.data);
 
-        const titleData = old!.data.filter((e) =>
-          e.title.toLowerCase().startsWith(searchQuery.toLowerCase())
-        );
-        const contentData = old!.data.filter((e) =>
-          e.content.includes(searchQuery)
-        );
-
-        const _data = [...titleData, ...contentData];
-
-        const data = uniqBy(_data, (id) => id.id);
-
-        return {
-          data,
-          count: old?.count,
-        };
-      });
+      queryClient.setQueryData<NotesResponseDto>(["notes"], (old) => ({
+        count: old!.count,
+        data: searchData!,
+      }));
     } else {
       queryClient.setQueryData<NotesResponseDto>(["notes"], () => {
         return oldData.current;
