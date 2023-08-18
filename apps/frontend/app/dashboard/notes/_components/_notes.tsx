@@ -10,16 +10,17 @@ import { Checkbox } from "@nextui-org/checkbox";
 import { Input } from "@nextui-org/input";
 import { cn } from "@nextui-org/system";
 import { useQuery } from "@tanstack/react-query";
+import uniqBy from "lodash.uniqby";
 import { NotesResponseDto } from "mote-types";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import reactStringReplace from "react-string-replace";
 
 export function Notes() {
   const routeParams = useParams();
-  const { register, handleSubmit, watch } = useForm();
+  const { register, watch } = useForm();
   const [deleteMode, addToSelectedNotes] = useNoteStore((state) => [
     state.deleteMode,
     state.addToSelectedNotes,
@@ -29,9 +30,6 @@ export function Notes() {
     queryKey: ["notes"],
   });
   const oldData = useRef<NotesResponseDto>();
-  const noteTags = useMemo(() => {
-    return data?.data.map((e) => e.tags);
-  }, [data]);
 
   const searchQuery: string = watch("search");
 
@@ -47,9 +45,9 @@ export function Notes() {
           e.content.includes(searchQuery)
         );
 
-        const data = [...titleData, ...contentData];
+        const _data = [...titleData, ...contentData];
 
-        console.log(data, searchQuery);
+        const data = uniqBy(_data, (id) => id.id);
 
         return {
           data,
