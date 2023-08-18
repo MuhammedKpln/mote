@@ -17,6 +17,7 @@
     "@nextui-org/skeleton": "^2.0.4",
     "@nextui-org/spinner": "^2.0.4",
     "@nextui-org/system": "^2.0.2",
+    "@nextui-org/tabs": "^2.0.11",
     "@nextui-org/theme": "^2.0.2",
     "@tanstack/react-query": "^4.32.6",
     "@tanstack/react-query-devtools": "^4.32.6",
