@@ -11,11 +11,13 @@ import { Checkbox } from "@nextui-org/checkbox";
 import { Input } from "@nextui-org/input";
 import { cn } from "@nextui-org/system";
 import { useQuery } from "@tanstack/react-query";
-import { NotesResponseDto } from "mote-types";
+import filter from "lodash.filter";
+import { NoteResponseDto, NotesResponseDto } from "mote-types";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
+import Select, { SingleValue } from "react-select";
 import reactStringReplace from "react-string-replace";
 
 export function Notes() {
@@ -31,6 +33,24 @@ export function Notes() {
   });
   const oldData = useRef<NotesResponseDto>();
 
+  const noteTags = useMemo(() => {
+    if (oldData.current) {
+      return oldData.current.data
+        .flatMap((obj) => obj.tags)
+        .map((e) => ({
+          value: e?.id,
+          label: e?.label,
+        }));
+    }
+
+    return data?.data
+      .flatMap((obj) => obj.tags)
+      .map((e) => ({
+        value: e?.id,
+        label: e?.label,
+      }));
+  }, [data]);
+
   const searchQuery: string = watch("search");
 
   useEffect(() => {
@@ -38,7 +58,7 @@ export function Notes() {
       const searchData = search(searchQuery, oldData.current!.data);
 
       queryClient.setQueryData<NotesResponseDto>(["notes"], (old) => ({
-        count: old!.count,
+        count: oldData.current!.count,
         data: searchData!,
       }));
     } else {
@@ -56,16 +76,78 @@ export function Notes() {
     }
   }, [data]);
 
+  function filterByTags(
+    value: SingleValue<{
+      value: number | undefined;
+      label: string | undefined;
+    }>
+  ) {
+    if (!value) {
+      queryClient.setQueryData<NotesResponseDto>(
+        ["notes"],
+        (_) => oldData.current
+      );
+
+      return;
+    }
+
+    //@ts-ignore
+    const filteredData: NoteResponseDto[] = filter<NoteResponseDto[]>(
+      oldData.current!.data,
+      {
+        tags: [
+          {
+            id: value?.value,
+          },
+        ],
+      }
+    );
+
+    if (filteredData.length > 0) {
+      queryClient.setQueryData<NotesResponseDto>(["notes"], (old) => ({
+        count: oldData.current!.count,
+        data: filteredData,
+      }));
+    }
+  }
+
   if (isLoading) {
     return <MoteSpinner />;
   }
 
   return (
     <>
-      <div className="p-5">
+      <div className="p-5 flex justify-around gap-5">
         <Input
           placeholder="Search for some notes,tags.."
+          className="w-3/6"
           {...register("search")}
+        />
+
+        <Select
+          options={noteTags}
+          isSearchable
+          isClearable
+          placeholder="Filter by tag"
+          onChange={(e) => filterByTags(e)}
+          styles={{
+            option(base, props) {
+              return {
+                ...base,
+                ":hover": {
+                  backgroundColor: "var(--mote-surface-color)",
+                  color: "white",
+                  cursor: "pointer",
+                },
+              };
+            },
+            control(base, props) {
+              return {
+                ...base,
+                border: 0,
+              };
+            },
+          }}
         />
       </div>
 

@@ -52,26 +52,35 @@ export function NoteTags({ tags, noteId, noteSlug }: IProps) {
   useEffect(() => {
     const _tags: string[] = tags.map((e) => e.label);
     setTagsToBeAdded(_tags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const _onDeleteTagsWrapper = useCallback((tag: TagDto[]) => {
-    deleteTags({
-      noteId,
-      tags: tag,
-    });
-  }, []);
+  const _onDeleteTagsWrapper = useCallback(
+    (tag: TagDto[]) => {
+      deleteTags({
+        noteId,
+        tags: tag,
+      });
+    },
+    [deleteTags, noteId]
+  );
 
-  const _onRemoved = useCallback((tag?: string) => {
-    if (tag) {
-      const _tags = tags.filter((s) => s.label === tag);
+  const _onRemoved = useCallback(
+    (tag?: string) => {
+      if (tag) {
+        const _tags = tags.filter((s) => s.label === tag);
 
-      if (_tags.length > 0) {
-        _onDeleteTagsWrapper(_tags);
+        if (_tags.length > 0) {
+          _onDeleteTagsWrapper(_tags);
+        }
       }
-    }
-  }, []);
+    },
+    [_onDeleteTagsWrapper, tags]
+  );
 
   const onBlur = useCallback(async () => {
+    if (tagsToBeAdded.length < 1) return;
+
     await addTags({
       noteId,
       tags: tagsToBeAdded,
