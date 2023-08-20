@@ -121,6 +121,7 @@ export function Notes() {
         <Input
           placeholder="Search for some notes,tags.."
           className="w-3/6"
+          id="search-notes-sidebar"
           {...register("search")}
         />
 

@@ -83,6 +83,14 @@ export function NotesSidebar({ children }: IProps) {
     );
   }, [mutation, selectedNotes, toggleDeleteMode, router]);
 
+  const onClickSearch = useCallback(() => {
+    const inputElement = document?.querySelector(
+      "#search-notes-sidebar"
+    ) as HTMLInputElement;
+
+    inputElement.focus();
+  }, []);
+
   return (
     <section id="notes-sidebar" className="mt-3 flex flex-col">
       <div
@@ -101,12 +109,14 @@ export function NotesSidebar({ children }: IProps) {
               }`}
             />
           </button>
-          <button type="button">
+          <button type="button" onClick={onClickSearch}>
             <FiSearch className="text-xl text-neutral-300" />
           </button>
-          <Link href={RouterPaths.CreateNote}>
-            <FiPlusCircle className="text-xl text-neutral-300" />
-          </Link>
+          <button type="submit">
+            <Link href={RouterPaths.CreateNote}>
+              <FiPlusCircle className="text-xl text-neutral-300" />
+            </Link>
+          </button>
         </div>
       </div>
 
